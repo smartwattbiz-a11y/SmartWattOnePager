@@ -18,7 +18,11 @@ python3 -m http.server 8000
 
 | Feature | How |
 | --- | --- |
-| 4 big count-up stat counters (90% less water, 3× faster, 0 pesticides, 365 days) | **anime.js** — number tween + SVG icon stroke draw-in |
+| Scroll-driven opening cutscene (animejs.com-style): a hand-drawn hydroponic system SVG assembles itself — pipes draw, water circulates, plants grow, lights come on | **GSAP ScrollTrigger** pinned + scrubbed timeline over `pathLength`-normalized strokes |
+| Light/dark theme toggle (top-right): dark = deep forest original, light = white with green + green-gradient highlights only | CSS custom-property themes + `localStorage`, three.js uniforms retinted live |
+| Pinned stats showcase: each stat zoomed-in full screen, text scrubbing left → right with scroll-tied counters, then a zoom-out reveals the full 4-card grid | **GSAP** pin + scrub timeline |
+| Stat cards: gradient borders, conic icon shimmer, cursor spotlight, 3D tilt, animated meters | CSS `color-mix` + vanilla JS pointer handlers |
+| Stat animations replay every time the grid scrolls back into frame | re-arming IntersectionObserver + **anime.js** |
 | Smooth fade-in sections on scroll | **GSAP + ScrollTrigger** |
 | Sideways-moving text (marquees + giant ghost words that drift on scroll) | CSS keyframes + **GSAP** scrub |
 | 3D "living droplet" with orbit rings + spore particles in the hero | **three.js** (custom simplex-noise shader) |

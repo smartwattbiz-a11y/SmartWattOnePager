@@ -1,8 +1,8 @@
 /* ============================================================
    WHY HYDROPONICS? — Farmspherica Innovations
    anime.js  → stat counters, SVG line-drawing, mini-viz one-shots
-   GSAP      → intro, scroll reveals, sideways ghost text, parallax
-   three.js  → hero "living droplet" 3D scene
+   GSAP      → cutscene, pinned stats showcase, reveals, parallax
+   three.js  → hero "living droplet" 3D scene (theme-aware)
    Everything degrades gracefully: if a library fails to load,
    the page stays fully readable in its final state.
    ============================================================ */
@@ -14,13 +14,17 @@
   var hasGSAP = typeof window.gsap !== 'undefined';
   var hasAnime = typeof window.anime !== 'undefined';
   var hasThree = typeof window.THREE !== 'undefined';
+  var hasST = hasGSAP && typeof window.ScrollTrigger !== 'undefined';
 
-  if (hasGSAP && window.ScrollTrigger) {
-    gsap.registerPlugin(ScrollTrigger);
-  }
+  if (hasST) gsap.registerPlugin(ScrollTrigger);
+
+  /* pinned, scroll-driven mode (cutscene + stats showcase) */
+  var PIN = hasST && !reduceMotion;
+  if (PIN) document.documentElement.classList.add('pin');
 
   function $(sel, ctx) { return (ctx || document).querySelector(sel); }
   function $$(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
+  function drawable(n) { return typeof n.getTotalLength === 'function'; }
 
   /* Run fn once, the first time el enters the viewport. */
   function onEnter(el, fn, ratio) {
@@ -36,24 +40,61 @@
     io.observe(el);
   }
 
-  /* ---------------- loader + intro ---------------- */
+  /* Run fn every time el re-enters the viewport. */
+  function onEveryEnter(el, fn, ratio) {
+    if (!el) return;
+    var was = false;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !was) fn();
+        was = entry.isIntersecting;
+      });
+    }, { threshold: ratio == null ? 0.3 : ratio }).observe(el);
+  }
 
-  function setupIntro() {
+  /* ---------------- theme toggle ---------------- */
+
+  function initTheme(threeAPI) {
+    var btn = $('#themeBtn');
+    var meta = $('#metaTheme');
+
+    function apply(light, persist) {
+      document.documentElement.setAttribute('data-theme', light ? 'light' : 'dark');
+      if (btn) {
+        btn.setAttribute('aria-pressed', String(light));
+        btn.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
+      }
+      if (meta) meta.content = light ? '#fdfefc' : '#04130b';
+      if (threeAPI) threeAPI.setTheme(light);
+      if (persist) {
+        try { localStorage.setItem('fs-theme', light ? 'light' : 'dark'); } catch (e) {}
+      }
+    }
+
+    apply(document.documentElement.getAttribute('data-theme') === 'light', false);
+
+    if (btn) {
+      btn.addEventListener('click', function () {
+        apply(document.documentElement.getAttribute('data-theme') !== 'light', true);
+      });
+    }
+  }
+
+  /* ---------------- loader + cutscene entrance ---------------- */
+
+  function setupEntrance() {
     if (!hasGSAP || reduceMotion) return null;
-    gsap.set('.hero-title .line-inner', { yPercent: 112 });
-    gsap.set('[data-intro]', { autoAlpha: 0, y: 24 });
+    var bits = ['#csKicker', '.cs-h.is-first', '#csCue'];
+    gsap.set(bits, { autoAlpha: 0, y: 26 });
     gsap.set('#nav', { autoAlpha: 0, y: -16 });
-    gsap.set('#bg3d', { autoAlpha: 0 });
-    return function playIntro() {
+    return function play() {
       gsap.timeline({ defaults: { ease: 'power4.out' } })
-        .to('#bg3d', { autoAlpha: 1, duration: 1.8, ease: 'power2.out' }, 0)
-        .to('.hero-title .line-inner', { yPercent: 0, duration: 1.25, stagger: 0.14 }, 0.15)
-        .to('[data-intro]', { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.12 }, 0.6)
-        .to('#nav', { autoAlpha: 1, y: 0, duration: 0.8 }, 0.85);
+        .to(bits, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.14 }, 0.1)
+        .to('#nav', { autoAlpha: 1, y: 0, duration: 0.8 }, 0.5);
     };
   }
 
-  function initLoader(playIntro) {
+  function initLoader(playEntrance) {
     var loader = $('#loader');
     var done = false;
     function finish() {
@@ -65,16 +106,111 @@
           duration: 0.85,
           ease: 'power4.inOut',
           delay: 0.4,
-          onStart: function () { if (playIntro) playIntro(); },
+          onStart: function () { if (playEntrance) playEntrance(); },
           onComplete: function () { loader.style.display = 'none'; }
         });
       } else {
         if (loader) loader.classList.add('is-done');
-        if (playIntro) playIntro();
+        if (playEntrance) playEntrance();
       }
     }
     window.addEventListener('load', finish);
     setTimeout(finish, 3200); // safety net if a CDN stalls the load event
+  }
+
+  /* ---------------- scroll cutscene (animejs.com-style) ---------------- */
+
+  function initCutscene() {
+    if (!PIN) return; // static, fully-drawn illustration without GSAP
+
+    var stage = $('#csStage');
+    if (!stage) return;
+
+    var hs = $$('.cs-h');
+    var pipes = $$('.cs-pipes .cs-draw');
+    var arrows = $$('.cs-arrows polyline');
+    var fillRect = $('.cs-fill');
+    var wave = $('.cs-wave');
+    var drops = $$('.cs-drop');
+    var roots = $$('.cs-roots .cs-draw');
+    var plants = $$('.cs-plant');
+    var plantStrokes = $$('.cs-plants .cs-draw');
+    var lightDraws = $$('.cs-light .cs-draw');
+    var rays = $$('.cs-rays line');
+    var sparks = $$('.cs-sparks path');
+    var cue = $('#csCue');
+
+    /* initial states — strokes wound back, props parked */
+    gsap.set($$('.cs-draw'), { strokeDasharray: 1, strokeDashoffset: 1 });
+    gsap.set(arrows, { autoAlpha: 0 });
+    if (fillRect) gsap.set(fillRect, { scaleY: 0, transformOrigin: '50% 100%' });
+    gsap.set(drops, { autoAlpha: 0 });
+    gsap.set(plants, { autoAlpha: 0, scale: 0.5, transformOrigin: '50% 100%' });
+    gsap.set(rays, { autoAlpha: 0 });
+    gsap.set(sparks, { autoAlpha: 0, scale: 0, transformOrigin: '50% 50%' });
+    if (hs[1]) gsap.set(hs[1], { autoAlpha: 0, y: 46 });
+    if (hs[2]) gsap.set(hs[2], { autoAlpha: 0, y: 46 });
+
+    var tl = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        trigger: '#intro',
+        start: 'top top',
+        end: '+=340%',
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1
+      }
+    });
+
+    /* act i — the system assembles */
+    tl.to(cue, { autoAlpha: 0, duration: 1 }, 0.3);
+    tl.to(pipes, { strokeDashoffset: 0, duration: 6, stagger: 0.5, ease: 'power1.inOut' }, 1);
+    if (fillRect) tl.to(fillRect, { scaleY: 1, duration: 2, ease: 'power2.out' }, 6.5);
+    if (wave) tl.to(wave, { strokeDashoffset: 0, duration: 4 }, 7);
+    tl.to(arrows, { autoAlpha: 1, duration: 1, stagger: 0.5 }, 8.5);
+
+    /* water starts circulating */
+    drops.forEach(function (d, i) {
+      var at = 9 + i * 4;
+      tl.to(d, { autoAlpha: 1, duration: 0.6 }, at);
+      tl.to(d, { x: 470, duration: 7 }, at);
+      tl.to(d, { autoAlpha: 0, duration: 0.6 }, at + 6.4);
+    });
+
+    /* act ii — life shows up */
+    if (hs[0]) tl.to(hs[0], { autoAlpha: 0, y: -46, duration: 2, ease: 'power2.in' }, 11.5);
+    if (hs[1]) tl.to(hs[1], { autoAlpha: 1, y: 0, duration: 2, ease: 'power2.out' }, 13);
+    tl.to(roots, { strokeDashoffset: 0, duration: 3, stagger: 0.6 }, 14);
+    tl.to(plants, { autoAlpha: 1, scale: 1, duration: 4, stagger: 2.5, ease: 'back.out(1.3)' }, 14);
+    tl.to(plantStrokes, { strokeDashoffset: 0, duration: 4, stagger: 0.45, ease: 'power1.inOut' }, 14.5);
+
+    /* act iii — lights on */
+    tl.to(lightDraws, { strokeDashoffset: 0, duration: 3, stagger: 0.5, ease: 'power1.inOut' }, 22);
+    tl.to(rays, { autoAlpha: 1, duration: 1, stagger: 0.5 }, 25);
+    tl.to(sparks, { autoAlpha: 1, scale: 1, duration: 1.2, stagger: 0.7, ease: 'back.out(2)' }, 26.5);
+    if (hs[1]) tl.to(hs[1], { autoAlpha: 0, y: -46, duration: 2, ease: 'power2.in' }, 27.5);
+    if (hs[2]) tl.to(hs[2], { autoAlpha: 1, y: 0, duration: 2, ease: 'power2.out' }, 29.5);
+
+    /* hold, then zoom through into the hero */
+    tl.to({}, { duration: 6 });
+    tl.to(stage, { scale: 1.45, autoAlpha: 0, duration: 7, ease: 'power2.in' }, 39);
+  }
+
+  /* ---------------- hero intro (plays when the hero arrives) ---------------- */
+
+  function initHeroIntro() {
+    if (!hasST || reduceMotion) return;
+    gsap.set('.hero-title .line-inner', { yPercent: 112 });
+    gsap.set('[data-intro]', { autoAlpha: 0, y: 24 });
+    gsap.set('#bg3d', { autoAlpha: 0 });
+    gsap.timeline({
+      defaults: { ease: 'power4.out' },
+      scrollTrigger: { trigger: '#hero', start: 'top 70%', once: true }
+    })
+      .to('#bg3d', { autoAlpha: 1, duration: 1.8, ease: 'power2.out' }, 0)
+      .to('.hero-title .line-inner', { yPercent: 0, duration: 1.25, stagger: 0.14 }, 0.1)
+      .to('[data-intro]', { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.12 }, 0.5);
   }
 
   /* ---------------- nav + scroll progress ---------------- */
@@ -87,41 +223,11 @@
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    if (hasGSAP && !reduceMotion) {
+    if (hasST && !reduceMotion) {
       gsap.to('#progress', {
         scaleX: 1,
         ease: 'none',
         scrollTrigger: { start: 0, end: 'max', scrub: 0.4 }
-      });
-    }
-  }
-
-  /* ---------------- scroll fade-in reveals ---------------- */
-
-  function initReveals() {
-    if (!hasGSAP || reduceMotion) return;
-    $$('[data-reveal]').forEach(function (el) {
-      var dir = el.getAttribute('data-reveal');
-      var from = { autoAlpha: 0, y: 56, x: 0 };
-      if (dir === 'left') { from.x = -70; from.y = 0; }
-      if (dir === 'right') { from.x = 70; from.y = 0; }
-      gsap.from(el, {
-        autoAlpha: from.autoAlpha, x: from.x, y: from.y,
-        duration: 1.15,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: el, start: 'top 82%', once: true }
-      });
-    });
-
-    /* stat cards rise in as a staggered group */
-    var cards = $$('.stat-card');
-    if (cards.length) {
-      gsap.from(cards, {
-        autoAlpha: 0, y: 70,
-        duration: 1.1,
-        stagger: 0.12,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: '#statsGrid', start: 'top 80%', once: true }
       });
     }
   }
@@ -142,10 +248,28 @@
     });
   }
 
+  /* ---------------- scroll fade-in reveals ---------------- */
+
+  function initReveals() {
+    if (!hasST || reduceMotion) return;
+    $$('[data-reveal]').forEach(function (el) {
+      var dir = el.getAttribute('data-reveal');
+      var from = { autoAlpha: 0, y: 56, x: 0 };
+      if (dir === 'left') { from.x = -70; from.y = 0; }
+      if (dir === 'right') { from.x = 70; from.y = 0; }
+      gsap.from(el, {
+        autoAlpha: from.autoAlpha, x: from.x, y: from.y,
+        duration: 1.15,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 82%', once: true }
+      });
+    });
+  }
+
   /* ---------------- sideways-moving text (GSAP scrub) ---------------- */
 
   function initDrift() {
-    if (!hasGSAP || reduceMotion) return;
+    if (!hasST || reduceMotion) return;
 
     $$('.ghost[data-drift]').forEach(function (el) {
       var dir = parseFloat(el.getAttribute('data-drift')) || 1;
@@ -170,7 +294,7 @@
   }
 
   function initHeroParallax() {
-    if (!hasGSAP || reduceMotion) return;
+    if (!hasST || reduceMotion) return;
     gsap.to('.hero-inner', {
       yPercent: 16, autoAlpha: 0.2, ease: 'none',
       scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 0.6 }
@@ -181,40 +305,179 @@
     });
   }
 
-  /* ---------------- stat counters (anime.js) ---------------- */
+  /* ---------------- stats showcase ----------------
+     Pinned sequence: each stat fills the screen zoomed-in while the
+     reel scrubs left → right (counters tied to scroll), then the view
+     zooms out to reveal the full four-card grid.
+     Grid animations replay every time you scroll back to them. */
 
-  function initStats() {
+  function playGridStats() {
+    if (!hasAnime || reduceMotion) return;
     var grid = $('#statsGrid');
-    if (!grid || !hasAnime || reduceMotion) return;
+    if (!grid) return;
 
-    var nums = $$('.num', grid);
-    nums.forEach(function (el) { el.textContent = el.dataset.from || '0'; });
-
-    var segs = $$('.stat-icon svg *', grid).filter(function (n) { return typeof n.getTotalLength === 'function'; });
-    segs.forEach(function (s) { s.style.strokeDashoffset = anime.setDashoffset(s); });
-
-    onEnter(grid, function () {
+    $$('.num', grid).forEach(function (el, i) {
+      anime.remove(el);
+      var from = parseFloat(el.dataset.from || '0');
+      var to = parseFloat(el.dataset.to || '0');
+      var state = { v: from };
+      el.textContent = String(from);
       anime({
-        targets: segs,
-        strokeDashoffset: [anime.setDashoffset, 0],
-        duration: 1500,
-        delay: anime.stagger(90),
-        easing: 'easeInOutSine'
+        targets: state,
+        v: to,
+        duration: 1900,
+        delay: 150 + i * 140,
+        easing: 'easeOutExpo',
+        update: function () { el.textContent = String(Math.round(state.v)); }
       });
-      nums.forEach(function (el, i) {
-        var from = parseFloat(el.dataset.from || '0');
-        var to = parseFloat(el.dataset.to || '0');
-        var state = { v: from };
-        anime({
-          targets: state,
-          v: to,
-          duration: 2300,
-          delay: 250 + i * 150,
-          easing: 'easeOutExpo',
-          update: function () { el.textContent = String(Math.round(state.v)); }
+    });
+
+    var segs = $$('.stat-icon svg *', grid).filter(drawable);
+    segs.forEach(function (s) {
+      anime.remove(s);
+      s.style.strokeDashoffset = anime.setDashoffset(s);
+    });
+    anime({
+      targets: segs,
+      strokeDashoffset: [anime.setDashoffset, 0],
+      duration: 1300,
+      delay: anime.stagger(70),
+      easing: 'easeInOutSine'
+    });
+
+    $$('.meter-fill', grid).forEach(function (m, i) {
+      anime.remove(m);
+      m.style.width = '0%';
+      anime({
+        targets: m,
+        width: (parseFloat(m.dataset.meter) || 0) + '%',
+        duration: 1500,
+        delay: 350 + i * 150,
+        easing: 'easeInOutQuart'
+      });
+    });
+  }
+
+  function initStatsShowcase() {
+    var grid = $('#statsGrid');
+
+    /* replay whenever the grid comes back into frame */
+    if (hasAnime && !reduceMotion && grid) {
+      onEveryEnter(grid, playGridStats, 0.35);
+    }
+
+    /* cursor spotlight + 3D tilt on the cards */
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion) {
+      $$('.stat-card').forEach(function (card) {
+        card.addEventListener('pointermove', function (e) {
+          var r = card.getBoundingClientRect();
+          var px = (e.clientX - r.left) / r.width;
+          var py = (e.clientY - r.top) / r.height;
+          card.style.setProperty('--mx', (px * 100) + '%');
+          card.style.setProperty('--my', (py * 100) + '%');
+          card.style.transform =
+            'perspective(900px) rotateX(' + ((0.5 - py) * 7).toFixed(2) + 'deg)' +
+            ' rotateY(' + ((px - 0.5) * 7).toFixed(2) + 'deg) translateY(-6px)';
+        });
+        card.addEventListener('pointerleave', function () {
+          card.style.transform = '';
         });
       });
-    }, 0.25);
+    }
+
+    if (!PIN) return; // static grid without GSAP / with reduced motion
+
+    var stage = $('#statsStage');
+    var track = $('#statsTrack');
+    var wrap = $('#statsGridWrap');
+    var slides = $$('.stat-slide');
+    var dots = $$('.stage-dot');
+    var dotsWrap = $('#stageDots');
+    if (!stage || !track || !wrap || !slides.length) return;
+
+    var SL = 12; // scrub-units per slide
+    var n = slides.length;
+    var TOTAL = 0;
+
+    gsap.set(wrap, { autoAlpha: 0, scale: 1.45 });
+
+    var tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: stage,
+        start: 'top top',
+        end: '+=480%',
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: function (self) {
+          if (!dots.length || !TOTAL) return;
+          var t = self.progress * TOTAL;
+          var idx = Math.min(Math.floor(t / SL), n - 1);
+          dots.forEach(function (d, i) {
+            d.classList.toggle('is-active', i === idx && t < n * SL);
+          });
+        }
+      }
+    });
+
+    slides.forEach(function (slide, i) {
+      var inner = $('.slide-inner', slide);
+      var num = $('.num', slide);
+      var start = i * SL;
+
+      /* the zoomed-in text drifts left → right while its slide is on screen */
+      if (inner) {
+        tl.fromTo(inner,
+          { xPercent: 7, scale: 0.94 },
+          { xPercent: -7, scale: 1.03, duration: SL, ease: 'none' },
+          start);
+      }
+
+      /* counter tied to the scrub — replays on every pass, both directions */
+      if (num) {
+        var from = parseFloat(num.dataset.from || '0');
+        var to = parseFloat(num.dataset.to || '0');
+        num.textContent = String(from);
+        var proxy = { v: from };
+        tl.fromTo(proxy, { v: from }, {
+          v: to,
+          duration: 7,
+          ease: 'none',
+          onUpdate: function () { num.textContent = String(Math.round(proxy.v)); }
+        }, start + 1.5);
+      }
+
+      if (i < n - 1) {
+        tl.to(track, {
+          xPercent: -100 * (i + 1) / n,
+          duration: 5,
+          ease: 'power1.inOut'
+        }, start + 7);
+      }
+    });
+
+    /* zoom out: the reel shrinks away and the full grid lands */
+    var zoomAt = n * SL - 2;
+    tl.to(track, {
+      scale: 0.55,
+      autoAlpha: 0,
+      duration: 6,
+      ease: 'power2.inOut',
+      transformOrigin: ((n - 0.5) / n * 100) + '% 50%'
+    }, zoomAt);
+    if (dotsWrap) tl.to(dotsWrap, { autoAlpha: 0, duration: 2 }, zoomAt);
+    tl.fromTo(wrap,
+      { autoAlpha: 0, scale: 1.45 },
+      { autoAlpha: 1, scale: 1, duration: 6, ease: 'power3.out' },
+      zoomAt + 2);
+    tl.fromTo($$('.stat-card', grid),
+      { y: 44, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 3.5, stagger: 0.5, ease: 'power2.out' },
+      zoomAt + 3);
+    tl.call(playGridStats, null, zoomAt + 4.5);
+    tl.to({}, { duration: 8 });
+
+    TOTAL = tl.duration();
   }
 
   /* ---------------- benefit mini-infographics ---------------- */
@@ -448,26 +711,34 @@
     '}'
   ].join('\n');
 
+  var THEME_3D = {
+    dark: {
+      deep: '#0b3d1e', leaf: '#aed581', mint: '#d0f0c0', water: '#81d4fa',
+      ring1: '#aed581', ring1o: 0.38, ring2: '#81d4fa', ring2o: 0.2,
+      pColor: '#ffffff', pOpacity: 0.85, additive: true
+    },
+    light: {
+      deep: '#1b5e20', leaf: '#43a047', mint: '#66bb6a', water: '#2e7d32',
+      ring1: '#2e7d32', ring1o: 0.4, ring2: '#66bb6a', ring2o: 0.25,
+      pColor: '#1b5e20', pOpacity: 0.4, additive: false
+    }
+  };
+
   function initThree() {
     var canvas = document.getElementById('bg3d');
-    if (!canvas || !hasThree) return;
+    if (!canvas || !hasThree) return null;
 
     var renderer;
     try {
       renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     } catch (err) {
-      return; // no WebGL — the CSS glows carry the hero on their own
+      return null; // no WebGL — the CSS glows carry the hero on their own
     }
     renderer.setClearColor(0x000000, 0);
 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 60);
     camera.position.z = 6.4;
-
-    var cDeep = new THREE.Color('#0b3d1e');
-    var cLeaf = new THREE.Color('#aed581');
-    var cMint = new THREE.Color('#d0f0c0');
-    var cWater = new THREE.Color('#81d4fa');
 
     /* the living droplet */
     var blobMat = new THREE.ShaderMaterial({
@@ -477,10 +748,10 @@
         uTime: { value: 0 },
         uAmp: { value: 0.42 },
         uFreq: { value: 1.15 },
-        uDeep: { value: cDeep },
-        uLeaf: { value: cLeaf },
-        uMint: { value: cMint },
-        uWater: { value: cWater }
+        uDeep: { value: new THREE.Color(THEME_3D.dark.deep) },
+        uLeaf: { value: new THREE.Color(THEME_3D.dark.leaf) },
+        uMint: { value: new THREE.Color(THEME_3D.dark.mint) },
+        uWater: { value: new THREE.Color(THEME_3D.dark.water) }
       }
     });
     var blob = new THREE.Mesh(new THREE.IcosahedronGeometry(1.5, 48), blobMat);
@@ -491,12 +762,12 @@
     /* orbit rings */
     var ring1 = new THREE.Mesh(
       new THREE.TorusGeometry(2.3, 0.012, 12, 220),
-      new THREE.MeshBasicMaterial({ color: cLeaf, transparent: true, opacity: 0.38 })
+      new THREE.MeshBasicMaterial({ color: new THREE.Color(THEME_3D.dark.ring1), transparent: true, opacity: THEME_3D.dark.ring1o })
     );
     ring1.rotation.set(Math.PI * 0.46, 0.4, 0);
     var ring2 = new THREE.Mesh(
       new THREE.TorusGeometry(2.78, 0.009, 12, 220),
-      new THREE.MeshBasicMaterial({ color: cWater, transparent: true, opacity: 0.2 })
+      new THREE.MeshBasicMaterial({ color: new THREE.Color(THEME_3D.dark.ring2), transparent: true, opacity: THEME_3D.dark.ring2o })
     );
     ring2.rotation.set(Math.PI * 0.38, -0.55, 0);
     blobGroup.add(ring1, ring2);
@@ -505,8 +776,7 @@
     /* drifting spore particles */
     var COUNT = 380;
     var positions = new Float32Array(COUNT * 3);
-    var colors = new Float32Array(COUNT * 3);
-    var palette = [cLeaf, cMint, cWater, cLeaf];
+    var shades = new Float32Array(COUNT * 3);
     for (var i = 0; i < COUNT; i++) {
       var theta = Math.random() * Math.PI * 2;
       var phi = Math.acos(2 * Math.random() - 1);
@@ -514,23 +784,24 @@
       positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
       positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
       positions[i * 3 + 2] = r * Math.cos(phi) - 1.5;
-      var c = palette[(Math.random() * palette.length) | 0];
       var dim = 0.35 + Math.random() * 0.65;
-      colors[i * 3] = c.r * dim;
-      colors[i * 3 + 1] = c.g * dim;
-      colors[i * 3 + 2] = c.b * dim;
+      shades[i * 3] = dim;
+      shades[i * 3 + 1] = dim;
+      shades[i * 3 + 2] = dim;
     }
     var pGeo = new THREE.BufferGeometry();
     pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    pGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    var points = new THREE.Points(pGeo, new THREE.PointsMaterial({
+    pGeo.setAttribute('color', new THREE.BufferAttribute(shades, 3));
+    var pMat = new THREE.PointsMaterial({
       size: 0.05,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: THEME_3D.dark.pOpacity,
+      color: new THREE.Color(THEME_3D.dark.pColor),
       blending: THREE.AdditiveBlending,
       depthWrite: false
-    }));
+    });
+    var points = new THREE.Points(pGeo, pMat);
     scene.add(points);
 
     /* pointer parallax */
@@ -565,10 +836,27 @@
 
     var clock = new THREE.Clock();
 
+    function setTheme(light) {
+      var p = light ? THEME_3D.light : THEME_3D.dark;
+      blobMat.uniforms.uDeep.value.set(p.deep);
+      blobMat.uniforms.uLeaf.value.set(p.leaf);
+      blobMat.uniforms.uMint.value.set(p.mint);
+      blobMat.uniforms.uWater.value.set(p.water);
+      ring1.material.color.set(p.ring1);
+      ring1.material.opacity = p.ring1o;
+      ring2.material.color.set(p.ring2);
+      ring2.material.opacity = p.ring2o;
+      pMat.color.set(p.pColor);
+      pMat.opacity = p.pOpacity;
+      pMat.blending = p.additive ? THREE.AdditiveBlending : THREE.NormalBlending;
+      pMat.needsUpdate = true;
+      if (reduceMotion) renderer.render(scene, camera);
+    }
+
     if (reduceMotion) {
       blobMat.uniforms.uTime.value = 4;
       renderer.render(scene, camera);
-      return;
+      return { setTheme: setTheme };
     }
 
     (function tick() {
@@ -587,21 +875,26 @@
       points.rotation.x = Math.sin(t * 0.1) * 0.04;
       renderer.render(scene, camera);
     })();
+
+    return { setTheme: setTheme };
   }
 
   /* ---------------- boot ---------------- */
 
-  initThree();
+  var threeAPI = initThree();
+  initTheme(threeAPI);
   initChrome();
   initMarquees();
+  initCutscene();
+  initHeroIntro();
+  initHeroParallax();
   initReveals();
   initDrift();
-  initHeroParallax();
-  initStats();
+  initStatsShowcase();
   initVizWater();
   initVizSpeed();
   initVizClean();
   initVizYear();
   initCTA();
-  initLoader(setupIntro());
+  initLoader(setupEntrance());
 })();

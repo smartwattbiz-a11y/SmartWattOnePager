@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Why Hydroponics? — Farmspherica Innovations</title>
   <meta name="description" content="An animated, scrolling infographic on why hydroponics wins: 90% less water, 3× faster growth, zero pesticides, 365 growing days a year. By Farmspherica Innovations." />
+  <meta name="theme-color" id="metaTheme" content="#04130b" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%A7%3C/text%3E%3C/svg%3E" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,7 +13,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/styles.css" />
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    document.documentElement.classList.add('js');
+    try {
+      if (localStorage.getItem('fs-theme') === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    } catch (e) {}
+  </script>
 </head>
 <body>
 
@@ -38,9 +46,116 @@
       <a href="#why">Why it wins</a>
     </nav>
     <a class="nav-cta" href="#join">Join us</a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to light mode" aria-pressed="false">
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="3.6" />
+        <line x1="12" y1="2.8" x2="12" y2="5" /><line x1="12" y1="19" x2="12" y2="21.2" />
+        <line x1="2.8" y1="12" x2="5" y2="12" /><line x1="19" y1="12" x2="21.2" y2="12" />
+        <line x1="5.5" y1="5.5" x2="7.1" y2="7.1" /><line x1="16.9" y1="16.9" x2="18.5" y2="18.5" />
+        <line x1="18.5" y1="5.5" x2="16.9" y2="7.1" /><line x1="7.1" y1="16.9" x2="5.5" y2="18.5" />
+      </svg>
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20 12.8A8 8 0 1 1 11.2 4a6.4 6.4 0 0 0 8.8 8.8Z" />
+      </svg>
+    </button>
   </header>
 
   <main id="top">
+
+    <!-- ============ SCROLL CUTSCENE ============ -->
+    <section class="cutscene" id="intro" aria-label="Intro: how a hydroponic farm works">
+      <div class="cutscene-stage" id="csStage">
+        <p class="cs-kicker" id="csKicker">Farmspherica presents</p>
+
+        <div class="cs-headlines" aria-live="polite">
+          <h2 class="cs-h is-first"><span class="cs-h-in">FORGET <span class="grad-text">SOIL.</span></span></h2>
+          <h2 class="cs-h"><span class="cs-h-in">GROW ON <span class="grad-text">WATER.</span></span></h2>
+          <h2 class="cs-h"><span class="cs-h-in">WELCOME TO <span class="grad-text">HYDROPONICS.</span></span></h2>
+        </div>
+
+        <div class="cs-art" id="csArt">
+          <!-- hand-drawn hydroponic NFT system: channel, net pots, plants,
+               roots, recirculating loop, reservoir + pump, grow light -->
+          <svg class="cs-svg" viewBox="0 0 760 520" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+            <g class="cs-pipes">
+              <rect class="cs-draw" x="120" y="330" width="520" height="46" rx="23" pathLength="1" />
+              <path class="cs-draw" d="M194 306h52l-10 26h-32z" pathLength="1" />
+              <path class="cs-draw" d="M354 306h52l-10 26h-32z" pathLength="1" />
+              <path class="cs-draw" d="M514 306h52l-10 26h-32z" pathLength="1" />
+              <path class="cs-draw" d="M640 353h36v62" pathLength="1" />
+              <path class="cs-draw" d="M120 353H86v119h479" pathLength="1" />
+              <rect class="cs-draw" x="565" y="415" width="150" height="75" rx="12" pathLength="1" />
+              <circle class="cs-draw" cx="612" cy="462" r="11" pathLength="1" />
+              <path class="cs-draw" d="M612 451v22M601 462h22" pathLength="1" />
+            </g>
+
+            <g class="cs-arrows">
+              <polyline points="78 414 86 402 94 414" />
+              <polyline points="330 464 318 472 330 480" />
+            </g>
+
+            <g class="cs-waterg">
+              <rect class="cs-fill" x="572" y="448" width="136" height="35" rx="6" />
+              <path class="cs-wave cs-draw" d="M132 360q16-8 32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0" pathLength="1" />
+              <circle class="cs-drop" cx="145" cy="350" r="4.5" />
+              <circle class="cs-drop" cx="145" cy="352" r="4" />
+              <circle class="cs-drop" cx="145" cy="349" r="3.5" />
+            </g>
+
+            <g class="cs-roots">
+              <path class="cs-draw" d="M214 332c-3 8 3 12 0 20m12-20c3 8-3 12 0 20" pathLength="1" />
+              <path class="cs-draw" d="M374 332c-3 8 3 12 0 20m12-20c3 8-3 12 0 20" pathLength="1" />
+              <path class="cs-draw" d="M534 332c-3 8 3 12 0 20m12-20c3 8-3 12 0 20" pathLength="1" />
+            </g>
+
+            <g class="cs-plants">
+              <g class="cs-plant">
+                <path class="cs-draw" d="M220 306v-38" pathLength="1" />
+                <path class="cs-draw" d="M220 282c0-9.4-7.3-14-16.9-14 0 9.4 7.3 14 16.9 14Z" pathLength="1" />
+                <path class="cs-draw" d="M220 274c0-9.4 7.3-14 16.9-14 0 9.4-7.3 14-16.9 14Z" pathLength="1" />
+              </g>
+              <g class="cs-plant">
+                <path class="cs-draw" d="M380 306v-88" pathLength="1" />
+                <path class="cs-draw" d="M380 262c0-14.4-11.2-24-26-24 0 14.4 11.2 24 26 24Z" pathLength="1" />
+                <path class="cs-draw" d="M380 246c0-14.4 11.2-24 26-24 0 14.4-11.2 24-26 24Z" pathLength="1" />
+                <path class="cs-draw" d="M380 230c0-10.8-8.4-16-19.5-16 0 10.8 8.4 16 19.5 16Z" pathLength="1" />
+                <circle class="cs-draw" cx="380" cy="212" r="5" pathLength="1" />
+              </g>
+              <g class="cs-plant">
+                <path class="cs-draw" d="M540 306v-66" pathLength="1" />
+                <path class="cs-draw" d="M540 268c0-12.2-9.5-18-22.1-18 0 12.2 9.5 18 22.1 18Z" pathLength="1" />
+                <path class="cs-draw" d="M540 252c0-12.2 9.5-18 22.1-18 0 12.2-9.5 18-22.1 18Z" pathLength="1" />
+              </g>
+            </g>
+
+            <g class="cs-light">
+              <rect class="cs-draw" x="230" y="118" width="300" height="16" rx="8" pathLength="1" />
+              <path class="cs-draw" d="M330 92v26M430 92v26" pathLength="1" />
+              <g class="cs-rays">
+                <line x1="255" y1="146" x2="255" y2="168" />
+                <line x1="315" y1="146" x2="315" y2="168" />
+                <line x1="380" y1="146" x2="380" y2="168" />
+                <line x1="445" y1="146" x2="445" y2="168" />
+                <line x1="505" y1="146" x2="505" y2="168" />
+              </g>
+            </g>
+
+            <g class="cs-sparks">
+              <path d="M300 172v16M292 180h16" />
+              <path d="M470 156v16M462 164h16" />
+              <path d="M170 222v16M162 230h16" />
+              <path d="M610 196v16M602 204h16" />
+            </g>
+          </svg>
+        </div>
+
+        <div class="cs-cue" id="csCue">
+          <span class="scroll-cue-track"><span class="scroll-cue-dot"></span></span>
+          <span class="scroll-cue-text">scroll to grow</span>
+        </div>
+      </div>
+    </section>
 
     <!-- ============ HERO ============ -->
     <section class="hero" id="hero">
@@ -99,66 +214,160 @@
       </div>
     </div>
 
-    <!-- ============ STATS ============ -->
+    <!-- ============ STATS SHOWCASE ============ -->
     <section class="stats" id="numbers">
       <div class="section-head" data-reveal>
         <p class="kicker">Proof, not promises</p>
         <h2>The numbers speak<br /><span class="grad-text">for themselves.</span></h2>
+        <p class="section-hint">keep scrolling — the numbers tell the story</p>
       </div>
 
-      <div class="stats-grid" id="statsGrid">
+      <div class="stats-stage" id="statsStage">
 
-        <article class="stat-card" data-accent="water" aria-label="90 percent less water">
-          <div class="stat-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3.2C8.5 7.4 6 10.6 6 13.6a6 6 0 0 0 12 0c0-3-2.5-6.2-6-10.4Z" />
-              <path d="M9.1 14.1a3 3 0 0 0 2.2 2.9" />
-            </svg>
-          </div>
-          <div class="stat-value"><span class="num" data-from="0" data-to="90">90</span><span class="suffix">%</span></div>
-          <h3 class="stat-label">less water</h3>
-          <p class="stat-caption">Closed-loop irrigation reuses every drop until a plant drinks it. Soil can’t compete.</p>
-        </article>
+        <div class="stats-track" id="statsTrack">
 
-        <article class="stat-card" data-accent="leaf" aria-label="3 times faster growth">
-          <div class="stat-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 21v-7.5" />
-              <path d="M12 13.5C12 9.9 9.2 7.5 5.5 7.5c0 3.6 2.8 6 6.5 6Z" />
-              <path d="M12 11.5c0-3 2.5-5 5.5-5 0 3-2.5 5-5.5 5Z" />
-            </svg>
+          <div class="stat-slide" data-accent="water">
+            <div class="slide-inner">
+              <div class="slide-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3.2C8.5 7.4 6 10.6 6 13.6a6 6 0 0 0 12 0c0-3-2.5-6.2-6-10.4Z" />
+                  <path d="M9.1 14.1a3 3 0 0 0 2.2 2.9" />
+                </svg>
+              </div>
+              <div class="slide-value"><span class="num" data-from="0" data-to="90">90</span><span class="suffix">%</span></div>
+              <p class="slide-label">less water</p>
+              <p class="slide-caption">Closed-loop irrigation reuses every single drop until a plant drinks it. The field can keep its sprinklers.</p>
+            </div>
           </div>
-          <div class="stat-value"><span class="num" data-from="0" data-to="3">3</span><span class="suffix">×</span></div>
-          <h3 class="stat-label">faster growth</h3>
-          <p class="stat-caption">Nutrients go straight to the root zone, so plants stop searching and start growing.</p>
-        </article>
 
-        <article class="stat-card" data-accent="mint" aria-label="Zero pesticides">
-          <div class="stat-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3.2 19 6v5.2c0 4.6-3 8.6-7 9.6-4-1-7-5-7-9.6V6l7-2.8Z" />
-              <path d="m8.8 11.6 2.3 2.3 4.3-4.3" />
-            </svg>
+          <div class="stat-slide" data-accent="leaf">
+            <div class="slide-inner">
+              <div class="slide-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 21v-7.5" />
+                  <path d="M12 13.5C12 9.9 9.2 7.5 5.5 7.5c0 3.6 2.8 6 6.5 6Z" />
+                  <path d="M12 11.5c0-3 2.5-5 5.5-5 0 3-2.5 5-5.5 5Z" />
+                </svg>
+              </div>
+              <div class="slide-value"><span class="num" data-from="0" data-to="3">3</span><span class="suffix">×</span></div>
+              <p class="slide-label">faster growth</p>
+              <p class="slide-caption">No digging, no searching — nutrients arrive straight at the root zone, so plants spend the saved energy growing.</p>
+            </div>
           </div>
-          <div class="stat-value"><span class="num" data-from="100" data-to="0">0</span><span class="suffix"></span></div>
-          <h3 class="stat-label">pesticides</h3>
-          <p class="stat-caption">No soil means no soil-borne pests — and nothing to spray. Ever.</p>
-        </article>
 
-        <article class="stat-card" data-accent="sun" aria-label="365 growing days a year">
-          <div class="stat-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3.6" />
-              <line x1="12" y1="2.8" x2="12" y2="5" /><line x1="12" y1="19" x2="12" y2="21.2" />
-              <line x1="2.8" y1="12" x2="5" y2="12" /><line x1="19" y1="12" x2="21.2" y2="12" />
-              <line x1="5.5" y1="5.5" x2="7.1" y2="7.1" /><line x1="16.9" y1="16.9" x2="18.5" y2="18.5" />
-              <line x1="18.5" y1="5.5" x2="16.9" y2="7.1" /><line x1="7.1" y1="16.9" x2="5.5" y2="18.5" />
-            </svg>
+          <div class="stat-slide" data-accent="mint">
+            <div class="slide-inner">
+              <div class="slide-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3.2 19 6v5.2c0 4.6-3 8.6-7 9.6-4-1-7-5-7-9.6V6l7-2.8Z" />
+                  <path d="m8.8 11.6 2.3 2.3 4.3-4.3" />
+                </svg>
+              </div>
+              <div class="slide-value"><span class="num" data-from="100" data-to="0">0</span><span class="suffix"></span></div>
+              <p class="slide-label">pesticides</p>
+              <p class="slide-caption">No soil means no soil-borne pests, which means nothing to spray and nothing to wash off. Ever.</p>
+            </div>
           </div>
-          <div class="stat-value"><span class="num" data-from="0" data-to="365">365</span><span class="suffix"></span></div>
-          <h3 class="stat-label">days a year</h3>
-          <p class="stat-caption">Indoor climate control turns every season into growing season.</p>
-        </article>
+
+          <div class="stat-slide" data-accent="sun">
+            <div class="slide-inner">
+              <div class="slide-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3.6" />
+                  <line x1="12" y1="2.8" x2="12" y2="5" /><line x1="12" y1="19" x2="12" y2="21.2" />
+                  <line x1="2.8" y1="12" x2="5" y2="12" /><line x1="19" y1="12" x2="21.2" y2="12" />
+                  <line x1="5.5" y1="5.5" x2="7.1" y2="7.1" /><line x1="16.9" y1="16.9" x2="18.5" y2="18.5" />
+                  <line x1="18.5" y1="5.5" x2="16.9" y2="7.1" /><line x1="7.1" y1="16.9" x2="5.5" y2="18.5" />
+                </svg>
+              </div>
+              <div class="slide-value"><span class="num" data-from="0" data-to="365">365</span><span class="suffix"></span></div>
+              <p class="slide-label">days a year</p>
+              <p class="slide-caption">Indoors, every season is growing season. Frost and drought simply aren’t invited.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="stats-grid-wrap" id="statsGridWrap">
+          <div class="stats-grid" id="statsGrid">
+
+            <article class="stat-card" data-accent="water" aria-label="90 percent less water">
+              <span class="card-glow" aria-hidden="true"></span>
+              <span class="card-index" aria-hidden="true">01</span>
+              <div class="stat-icon" aria-hidden="true">
+                <span class="icon-ring"></span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3.2C8.5 7.4 6 10.6 6 13.6a6 6 0 0 0 12 0c0-3-2.5-6.2-6-10.4Z" />
+                  <path d="M9.1 14.1a3 3 0 0 0 2.2 2.9" />
+                </svg>
+              </div>
+              <div class="stat-value"><span class="num" data-from="0" data-to="90">90</span><span class="suffix">%</span></div>
+              <h3 class="stat-label">less water</h3>
+              <p class="stat-caption">Closed-loop irrigation reuses every drop until a plant drinks it. Soil can’t compete.</p>
+              <div class="stat-meter" aria-hidden="true"><span class="meter-fill" data-meter="90" style="width:90%"></span></div>
+            </article>
+
+            <article class="stat-card" data-accent="leaf" aria-label="3 times faster growth">
+              <span class="card-glow" aria-hidden="true"></span>
+              <span class="card-index" aria-hidden="true">02</span>
+              <div class="stat-icon" aria-hidden="true">
+                <span class="icon-ring"></span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 21v-7.5" />
+                  <path d="M12 13.5C12 9.9 9.2 7.5 5.5 7.5c0 3.6 2.8 6 6.5 6Z" />
+                  <path d="M12 11.5c0-3 2.5-5 5.5-5 0 3-2.5 5-5.5 5Z" />
+                </svg>
+              </div>
+              <div class="stat-value"><span class="num" data-from="0" data-to="3">3</span><span class="suffix">×</span></div>
+              <h3 class="stat-label">faster growth</h3>
+              <p class="stat-caption">Nutrients go straight to the root zone, so plants stop searching and start growing.</p>
+              <div class="stat-meter" aria-hidden="true"><span class="meter-fill" data-meter="100" style="width:100%"></span></div>
+            </article>
+
+            <article class="stat-card" data-accent="mint" aria-label="Zero pesticides">
+              <span class="card-glow" aria-hidden="true"></span>
+              <span class="card-index" aria-hidden="true">03</span>
+              <div class="stat-icon" aria-hidden="true">
+                <span class="icon-ring"></span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3.2 19 6v5.2c0 4.6-3 8.6-7 9.6-4-1-7-5-7-9.6V6l7-2.8Z" />
+                  <path d="m8.8 11.6 2.3 2.3 4.3-4.3" />
+                </svg>
+              </div>
+              <div class="stat-value"><span class="num" data-from="100" data-to="0">0</span><span class="suffix"></span></div>
+              <h3 class="stat-label">pesticides</h3>
+              <p class="stat-caption">No soil means no soil-borne pests — and nothing to spray. Ever.</p>
+              <div class="stat-meter" aria-hidden="true"><span class="meter-fill" data-meter="100" style="width:100%"></span></div>
+            </article>
+
+            <article class="stat-card" data-accent="sun" aria-label="365 growing days a year">
+              <span class="card-glow" aria-hidden="true"></span>
+              <span class="card-index" aria-hidden="true">04</span>
+              <div class="stat-icon" aria-hidden="true">
+                <span class="icon-ring"></span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3.6" />
+                  <line x1="12" y1="2.8" x2="12" y2="5" /><line x1="12" y1="19" x2="12" y2="21.2" />
+                  <line x1="2.8" y1="12" x2="5" y2="12" /><line x1="19" y1="12" x2="21.2" y2="12" />
+                  <line x1="5.5" y1="5.5" x2="7.1" y2="7.1" /><line x1="16.9" y1="16.9" x2="18.5" y2="18.5" />
+                  <line x1="18.5" y1="5.5" x2="16.9" y2="7.1" /><line x1="7.1" y1="16.9" x2="5.5" y2="18.5" />
+                </svg>
+              </div>
+              <div class="stat-value"><span class="num" data-from="0" data-to="365">365</span><span class="suffix"></span></div>
+              <h3 class="stat-label">days a year</h3>
+              <p class="stat-caption">Indoor climate control turns every season into growing season.</p>
+              <div class="stat-meter" aria-hidden="true"><span class="meter-fill" data-meter="100" style="width:100%"></span></div>
+            </article>
+
+          </div>
+        </div>
+
+        <div class="stage-dots" id="stageDots" aria-hidden="true">
+          <span class="stage-dot is-active"></span>
+          <span class="stage-dot"></span>
+          <span class="stage-dot"></span>
+          <span class="stage-dot"></span>
+        </div>
 
       </div>
     </section>
@@ -275,9 +484,9 @@
                 <svg class="ring" viewBox="0 0 160 160" aria-hidden="true">
                   <defs>
                     <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#2E7D32" />
-                      <stop offset="55%" stop-color="#AED581" />
-                      <stop offset="100%" stop-color="#81D4FA" />
+                      <stop class="ring-stop-a" offset="0%" stop-color="#2E7D32" />
+                      <stop class="ring-stop-b" offset="55%" stop-color="#AED581" />
+                      <stop class="ring-stop-c" offset="100%" stop-color="#81D4FA" />
                     </linearGradient>
                   </defs>
                   <circle class="ring-track" cx="80" cy="80" r="66" />
