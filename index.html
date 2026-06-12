@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Hydroponics? — Farmspherica Innovations</title>
+  <meta name="description" content="An animated, scrolling infographic on why hydroponics wins: 90% less water, 3× faster growth, zero pesticides, 365 growing days a year. By Farmspherica Innovations." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%A7%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+  <!-- Loader curtain -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <span class="loader-mark">FARMSPHERICA<span class="dot">.</span></span>
+      <span class="loader-line"><span class="loader-line-fill"></span></span>
+      <span class="loader-tag">growing without soil…</span>
+    </div>
+  </div>
+
+  <!-- Scroll progress -->
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <!-- Film grain -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <a class="nav-logo" href="#top">FARMSPHERICA<span class="dot">.</span></a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#numbers">The numbers</a>
+      <a href="#why">Why it wins</a>
+    </nav>
+    <a class="nav-cta" href="#join">Join us</a>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <canvas id="bg3d" aria-hidden="true"></canvas>
+      <div class="hero-glow hero-glow-a" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow-b" aria-hidden="true"></div>
+
+      <div class="hero-inner">
+        <p class="hero-kicker" data-intro>The case for growing without soil</p>
+        <h1 class="hero-title">
+          <span class="line"><span class="line-inner">WHY</span></span>
+          <span class="line"><span class="line-inner grad-text">HYDROPONICS?</span></span>
+        </h1>
+        <p class="hero-sub" data-intro>
+          Farms that run on water use <strong>90% less</strong> of it, grow food
+          <strong>3× faster</strong>, and never touch a pesticide.
+          Here’s the case for ditching dirt — in four numbers.
+        </p>
+        <div class="hero-actions" data-intro>
+          <a class="btn btn-solid" href="#numbers">See the numbers</a>
+          <a class="btn btn-ghost" href="#join">Join Farmspherica</a>
+        </div>
+      </div>
+
+      <a class="scroll-cue" href="#numbers" data-intro aria-label="Scroll to the numbers">
+        <span class="scroll-cue-track"><span class="scroll-cue-dot"></span></span>
+        <span class="scroll-cue-text">scroll</span>
+      </a>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" data-direction="left" aria-hidden="true">
+      <div class="marquee-lane">
+        <div class="marquee-track">
+          <div class="marquee-group">
+            <span>No soil</span><i class="mq-dot"></i>
+            <span>90% less water</span><i class="mq-dot"></i>
+            <span>3× faster growth</span><i class="mq-dot"></i>
+            <span>Zero pesticides</span><i class="mq-dot"></i>
+            <span>365 days a year</span><i class="mq-dot"></i>
+            <span>No weeds</span><i class="mq-dot"></i>
+            <span>Any climate</span><i class="mq-dot"></i>
+            <span>More yield per m²</span><i class="mq-dot"></i>
+          </div>
+          <div class="marquee-group" aria-hidden="true">
+            <span>No soil</span><i class="mq-dot"></i>
+            <span>90% less water</span><i class="mq-dot"></i>
+            <span>3× faster growth</span><i class="mq-dot"></i>
+            <span>Zero pesticides</span><i class="mq-dot"></i>
+            <span>365 days a year</span><i class="mq-dot"></i>
+            <span>No weeds</span><i class="mq-dot"></i>
+            <span>Any climate</span><i class="mq-dot"></i>
+            <span>More yield per m²</span><i class="mq-dot"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ STATS ============ -->
+    <section class="stats" id="numbers">
+      <div class="section-head" data-reveal>
+        <p class="kicker">Proof, not promises</p>
+        <h2>The numbers speak<br /><span class="grad-text">for themselves.</span></h2>
+      </div>
+
+      <div class="stats-grid" id="statsGrid">
+
+        <article class="stat-card" data-accent="water" aria-label="90 percent less water">
+          <div class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3.2C8.5 7.4 6 10.6 6 13.6a6 6 0 0 0 12 0c0-3-2.5-6.2-6-10.4Z" />
+              <path d="M9.1 14.1a3 3 0 0 0 2.2 2.9" />
+            </svg>
+          </div>
+          <div class="stat-value"><span class="num" data-from="0" data-to="90">90</span><span class="suffix">%</span></div>
+          <h3 class="stat-label">less water</h3>
+          <p class="stat-caption">Closed-loop irrigation reuses every drop until a plant drinks it. Soil can’t compete.</p>
+        </article>
+
+        <article class="stat-card" data-accent="leaf" aria-label="3 times faster growth">
+          <div class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 21v-7.5" />
+              <path d="M12 13.5C12 9.9 9.2 7.5 5.5 7.5c0 3.6 2.8 6 6.5 6Z" />
+              <path d="M12 11.5c0-3 2.5-5 5.5-5 0 3-2.5 5-5.5 5Z" />
+            </svg>
+          </div>
+          <div class="stat-value"><span class="num" data-from="0" data-to="3">3</span><span class="suffix">×</span></div>
+          <h3 class="stat-label">faster growth</h3>
+          <p class="stat-caption">Nutrients go straight to the root zone, so plants stop searching and start growing.</p>
+        </article>
+
+        <article class="stat-card" data-accent="mint" aria-label="Zero pesticides">
+          <div class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3.2 19 6v5.2c0 4.6-3 8.6-7 9.6-4-1-7-5-7-9.6V6l7-2.8Z" />
+              <path d="m8.8 11.6 2.3 2.3 4.3-4.3" />
+            </svg>
+          </div>
+          <div class="stat-value"><span class="num" data-from="100" data-to="0">0</span><span class="suffix"></span></div>
+          <h3 class="stat-label">pesticides</h3>
+          <p class="stat-caption">No soil means no soil-borne pests — and nothing to spray. Ever.</p>
+        </article>
+
+        <article class="stat-card" data-accent="sun" aria-label="365 growing days a year">
+          <div class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3.6" />
+              <line x1="12" y1="2.8" x2="12" y2="5" /><line x1="12" y1="19" x2="12" y2="21.2" />
+              <line x1="2.8" y1="12" x2="5" y2="12" /><line x1="19" y1="12" x2="21.2" y2="12" />
+              <line x1="5.5" y1="5.5" x2="7.1" y2="7.1" /><line x1="16.9" y1="16.9" x2="18.5" y2="18.5" />
+              <line x1="18.5" y1="5.5" x2="16.9" y2="7.1" /><line x1="7.1" y1="16.9" x2="5.5" y2="18.5" />
+            </svg>
+          </div>
+          <div class="stat-value"><span class="num" data-from="0" data-to="365">365</span><span class="suffix"></span></div>
+          <h3 class="stat-label">days a year</h3>
+          <p class="stat-caption">Indoor climate control turns every season into growing season.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============ BENEFITS ============ -->
+    <section class="benefits" id="why">
+
+      <!-- 01 · WATER -->
+      <section class="benefit">
+        <span class="ghost" data-drift="-1" aria-hidden="true">WATER</span>
+        <div class="benefit-grid">
+          <div class="benefit-copy" data-reveal="left">
+            <span class="benefit-index">01</span>
+            <h3>Water that<br /><span class="hl hl-water">never quits.</span></h3>
+            <p>
+              In a field, most irrigation drains straight past the roots and disappears.
+              A hydroponic system is a closed loop — the same water cycles through the
+              root zone again and again, and the only way out is through a plant.
+              Ten litres end up doing the work of a hundred.
+            </p>
+          </div>
+          <div class="benefit-viz" data-reveal="right">
+            <div class="viz viz-water" id="vizWater">
+              <figure class="tube">
+                <div class="tube-glass"><div class="tube-fill soil" data-fill="96" style="height:96%"></div></div>
+                <figcaption>Soil farming<span>100&nbsp;L</span></figcaption>
+              </figure>
+              <figure class="tube">
+                <div class="tube-glass"><div class="tube-fill hydro" data-fill="10" style="height:10%"></div></div>
+                <figcaption>Hydroponics<span>10&nbsp;L</span></figcaption>
+              </figure>
+              <p class="viz-note">Water needed for the same harvest</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 · SPEED -->
+      <section class="benefit">
+        <span class="ghost" data-drift="1" aria-hidden="true">SPEED</span>
+        <div class="benefit-grid flip">
+          <div class="benefit-copy" data-reveal="right">
+            <span class="benefit-index">02</span>
+            <h3>Roots that<br /><span class="hl hl-leaf">never go hunting.</span></h3>
+            <p>
+              Soil makes a plant work for its dinner — roots burrow and branch, burning
+              energy just searching for food. Hydroponics hands a perfectly balanced meal
+              straight to the root zone, so all of that energy goes up into leaves and
+              fruit instead. Same seed, triple the pace.
+            </p>
+          </div>
+          <div class="benefit-viz" data-reveal="left">
+            <div class="viz viz-speed" id="vizSpeed">
+              <div class="race">
+                <div class="race-label"><span>Hydroponics</span><span>30 days to harvest</span></div>
+                <div class="race-bar"><span class="race-fill hydro" data-w="100" style="width:100%"></span></div>
+              </div>
+              <div class="race">
+                <div class="race-label"><span>Soil</span><span>90 days to harvest</span></div>
+                <div class="race-bar"><span class="race-fill soil" data-w="100" style="width:100%"></span></div>
+              </div>
+              <span class="race-chip" id="raceChip">3× faster 🏁</span>
+              <p class="viz-note">Same crop, racing to harvest day</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 · PURITY -->
+      <section class="benefit">
+        <span class="ghost" data-drift="-1" aria-hidden="true">PURITY</span>
+        <div class="benefit-grid">
+          <div class="benefit-copy" data-reveal="left">
+            <span class="benefit-index">03</span>
+            <h3>Nothing to spray.<br /><span class="hl hl-mint">Nothing to wash off.</span></h3>
+            <p>
+              Most crop pests live in dirt — so we removed the dirt. Indoors, on water,
+              crops grow with no herbicides, no fungicides and no insecticides.
+              Your salad arrives exactly as it grew: clean.
+            </p>
+          </div>
+          <div class="benefit-viz" data-reveal="right">
+            <div class="viz viz-clean" id="vizClean">
+              <svg class="shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3.2 19 6v5.2c0 4.6-3 8.6-7 9.6-4-1-7-5-7-9.6V6l7-2.8Z" />
+                <path d="m8.8 11.6 2.3 2.3 4.3-4.3" />
+              </svg>
+              <div class="chips">
+                <span class="chip">0 herbicides</span>
+                <span class="chip">0 fungicides</span>
+                <span class="chip">0 insecticides</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04 · ALWAYS -->
+      <section class="benefit">
+        <span class="ghost" data-drift="1" aria-hidden="true">ALWAYS</span>
+        <div class="benefit-grid flip">
+          <div class="benefit-copy" data-reveal="right">
+            <span class="benefit-index">04</span>
+            <h3>Seasons are<br /><span class="hl hl-sun">now optional.</span></h3>
+            <p>
+              Frost, drought, heatwave, monsoon — none of them get a vote indoors.
+              Light, temperature and humidity are dialled in by software, so harvest
+              day can land on any day of the year. All 365 of them.
+            </p>
+          </div>
+          <div class="benefit-viz" data-reveal="left">
+            <div class="viz viz-year" id="vizYear">
+              <div class="ring-wrap">
+                <svg class="ring" viewBox="0 0 160 160" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#2E7D32" />
+                      <stop offset="55%" stop-color="#AED581" />
+                      <stop offset="100%" stop-color="#81D4FA" />
+                    </linearGradient>
+                  </defs>
+                  <circle class="ring-track" cx="80" cy="80" r="66" />
+                  <circle class="ring-sweep" cx="80" cy="80" r="66" pathLength="100" stroke="url(#ringGrad)" />
+                </svg>
+                <div class="ring-center">
+                  <span class="ring-num" id="ringNum" data-from="0" data-to="365">365</span>
+                  <span class="ring-sub">growing days</span>
+                </div>
+              </div>
+              <p class="viz-note">One full lap around the calendar</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- ============ MARQUEE 2 ============ -->
+    <div class="marquee" data-direction="right" aria-hidden="true">
+      <div class="marquee-lane">
+        <div class="marquee-track">
+          <div class="marquee-group">
+            <span>Grow smarter</span><i class="mq-dot"></i>
+            <span>Grow cleaner</span><i class="mq-dot"></i>
+            <span>Grow faster</span><i class="mq-dot"></i>
+            <span>Grow anywhere</span><i class="mq-dot"></i>
+            <span>Grow smarter</span><i class="mq-dot"></i>
+            <span>Grow cleaner</span><i class="mq-dot"></i>
+            <span>Grow faster</span><i class="mq-dot"></i>
+            <span>Grow anywhere</span><i class="mq-dot"></i>
+          </div>
+          <div class="marquee-group" aria-hidden="true">
+            <span>Grow smarter</span><i class="mq-dot"></i>
+            <span>Grow cleaner</span><i class="mq-dot"></i>
+            <span>Grow faster</span><i class="mq-dot"></i>
+            <span>Grow anywhere</span><i class="mq-dot"></i>
+            <span>Grow smarter</span><i class="mq-dot"></i>
+            <span>Grow cleaner</span><i class="mq-dot"></i>
+            <span>Grow faster</span><i class="mq-dot"></i>
+            <span>Grow anywhere</span><i class="mq-dot"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta" id="join">
+      <div class="cta-glow" aria-hidden="true"></div>
+      <p class="kicker" data-reveal>The future of food is already growing</p>
+      <h2 class="cta-title" data-reveal>
+        JOIN<br /><span class="grad-text">FARMSPHERICA</span>
+      </h2>
+      <p class="cta-sub" data-reveal>
+        Bring hydroponic farming to your city, your campus, your rooftop.
+        We’ll handle the science — you watch it grow.
+      </p>
+      <div class="cta-action" data-reveal>
+        <a class="btn-cta" id="ctaBtn" href="https://www.aavrt.com/" target="_blank" rel="noopener">
+          <span class="pulse" aria-hidden="true"></span>
+          <span class="btn-cta-label">Start growing with us</span>
+          <span class="btn-cta-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 Farmspherica Innovations Pvt.&nbsp;Ltd.</span>
+    <span class="footer-tag">Grown without soil 💧</span>
+    <span class="footer-stack">HTML · CSS · JS — anime.js / GSAP / three.js</span>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
