@@ -457,15 +457,16 @@
       var num = $('.num', slide);
       var start = i * SL;
 
-      /* the zoomed-in text drifts left → right while its slide is on screen */
+      /* 1 — the stat scrolls in from the left and zooms to full as it lands */
       if (inner) {
         tl.fromTo(inner,
-          { xPercent: 7, scale: 0.94 },
-          { xPercent: -7, scale: 1.03, duration: SL, ease: 'none' },
+          { xPercent: -6, scale: 0.92 },
+          { xPercent: 0, scale: 1, duration: 4.5, ease: 'power2.out' },
           start);
       }
 
-      /* counter tied to the scrub — replays on every pass, both directions */
+      /* 2 — the counter runs and LANDS on its target value
+         (scrubbed, so it replays cleanly both directions) */
       if (num) {
         var from = parseFloat(num.dataset.from || '0');
         var to = parseFloat(num.dataset.to || '0');
@@ -473,26 +474,27 @@
         var proxy = { v: from };
         tl.fromTo(proxy, { v: from }, {
           v: to,
-          duration: 7,
+          duration: 4,
           ease: 'none',
           onUpdate: function () { num.textContent = String(Math.round(proxy.v)); }
-        }, start + 1.5);
+        }, start + 0.5);
       }
 
+      /* 3 — PAUSE (units ~4.5 → 8.5): nothing moves, so the finished number is
+         held still on screen. 4 — only then does the reel slide one full slide
+         sideways to the next stat. */
       if (i < n - 1) {
-        /* advance exactly one slide width (each slide is 100% of the track's
-           own box) so the reel moves straight from one stat to the next with
-           no mid-point pause */
         tl.to(track, {
           xPercent: -100 * (i + 1),
-          duration: 5,
+          duration: 3.5,
           ease: 'power2.inOut'
-        }, start + 7);
+        }, start + 8.5);
       }
     });
 
-    /* zoom out: the reel shrinks away and the full grid lands */
-    var zoomAt = n * SL - 2;
+    /* zoom out begins right after the last stat's pause (same offset the
+       between-stat moves use) so the rhythm stays consistent */
+    var zoomAt = (n - 1) * SL + 8.5;
     tl.to(track, {
       scale: 0.55,
       autoAlpha: 0,
