@@ -235,16 +235,48 @@
   /* ---------------- marquees ---------------- */
 
   function initMarquees() {
-    $$('.marquee-track').forEach(function (track) {
-      /* duplicate the groups so ultrawide screens never see a gap */
-      $$('.marquee-group', track).forEach(function (g) {
-        var clone = g.cloneNode(true);
-        clone.setAttribute('aria-hidden', 'true');
-        track.appendChild(clone);
-      });
-      /* normalize speed: same px/s regardless of track width */
-      var half = track.scrollWidth / 2;
-      if (half > 0) track.style.animationDuration = Math.max(18, half / 95) + 's';
+    if (reduceMotion) return; // CSS leaves the text static under reduced motion
+
+    var SPEED = 150; // px per second — same feel on every screen width
+
+    function build(track) {
+      /* remember the original single-group markup once */
+      var unit = track._mqUnit;
+      if (unit == null) {
+        var first = track.querySelector('.marquee-group');
+        unit = track._mqUnit = first ? first.innerHTML : track.innerHTML;
+      }
+
+      /* measure one group's natural width */
+      track.style.animation = 'none';
+      track.innerHTML = '<div class="marquee-group">' + unit + '</div>';
+      var unitW = track.firstElementChild.getBoundingClientRect().width;
+      if (!unitW) { track.style.animation = ''; return; }
+
+      /* a "set" repeats the group until it comfortably overflows the viewport,
+         so the seam never leaves a visible gap; two identical sets make the
+         -50% translate loop perfectly seamless */
+      var perSet = Math.max(1, Math.ceil((window.innerWidth * 1.25) / unitW));
+      var group = '<div class="marquee-group" aria-hidden="true">' + unit + '</div>';
+      var set = '';
+      for (var i = 0; i < perSet; i++) set += group;
+      track.innerHTML = set + set;
+
+      var setW = unitW * perSet;
+      track.style.setProperty('--mq-dur', (setW / SPEED).toFixed(2) + 's');
+
+      void track.offsetWidth;   // flush layout before re-enabling the animation
+      track.style.animation = '';
+    }
+
+    var tracks = $$('.marquee-track');
+    tracks.forEach(build);
+
+    /* rebuild on width change (e.g. orientation) so speed/gap stay correct */
+    var rt;
+    window.addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { tracks.forEach(build); }, 250);
     });
   }
 
@@ -279,18 +311,8 @@
         scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: 1.2 }
       });
     });
-
-    /* marquee lanes get an extra scroll-linked shift for depth
-       (always toward negative x so the track's left edge never gaps) */
-    $$('.marquee').forEach(function (mq) {
-      var lane = $('.marquee-lane', mq);
-      if (!lane) return;
-      gsap.fromTo(lane, { x: 0 }, {
-        x: -130,
-        ease: 'none',
-        scrollTrigger: { trigger: mq, start: 'top bottom', end: 'bottom top', scrub: 0.8 }
-      });
-    });
+    /* note: the marquees run purely on a composited CSS animation now — no
+       scroll-linked transform on top, which is what made them stutter. */
   }
 
   function initHeroParallax() {
