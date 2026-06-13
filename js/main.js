@@ -480,10 +480,13 @@
       }
 
       if (i < n - 1) {
+        /* advance exactly one slide width (each slide is 100% of the track's
+           own box) so the reel moves straight from one stat to the next with
+           no mid-point pause */
         tl.to(track, {
-          xPercent: -100 * (i + 1) / n,
+          xPercent: -100 * (i + 1),
           duration: 5,
-          ease: 'power1.inOut'
+          ease: 'power2.inOut'
         }, start + 7);
       }
     });
@@ -495,7 +498,7 @@
       autoAlpha: 0,
       duration: 6,
       ease: 'power2.inOut',
-      transformOrigin: ((n - 0.5) / n * 100) + '% 50%'
+      transformOrigin: ((n - 0.5) * 100) + '% 50%'
     }, zoomAt);
     if (dotsWrap) tl.to(dotsWrap, { autoAlpha: 0, duration: 2 }, zoomAt);
     tl.fromTo(wrap,
