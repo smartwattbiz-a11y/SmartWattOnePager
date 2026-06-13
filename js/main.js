@@ -255,15 +255,20 @@
 
       /* a "set" repeats the group until it comfortably overflows the viewport,
          so the seam never leaves a visible gap; two identical sets make the
-         -50% translate loop perfectly seamless */
+         loop perfectly seamless when we shift by exactly one set's width */
       var perSet = Math.max(1, Math.ceil((window.innerWidth * 1.25) / unitW));
       var group = '<div class="marquee-group" aria-hidden="true">' + unit + '</div>';
       var set = '';
       for (var i = 0; i < perSet; i++) set += group;
       track.innerHTML = set + set;
 
-      var setW = unitW * perSet;
-      track.style.setProperty('--mq-dur', (setW / SPEED).toFixed(2) + 's');
+      /* Drive the animation with an exact PIXEL shift (one set width), not a
+         percentage. Percentage transforms can force Chrome to run the
+         animation on the main thread; a fixed px translate stays on the GPU
+         compositor, so it's as fluid as native scrolling. */
+      var half = Math.round(track.scrollWidth / 2);
+      track.style.setProperty('--mq-shift', '-' + half + 'px');
+      track.style.setProperty('--mq-dur', (half / SPEED).toFixed(2) + 's');
 
       void track.offsetWidth;   // flush layout before re-enabling the animation
       track.style.animation = '';
@@ -272,9 +277,14 @@
     var tracks = $$('.marquee-track');
     tracks.forEach(build);
 
-    /* rebuild on width change (e.g. orientation) so speed/gap stay correct */
+    /* rebuild only when the WIDTH actually changes — mobile browsers fire
+       resize on every scroll (URL bar show/hide), and rebuilding mid-scroll
+       would restart the animation and stutter */
+    var lastW = window.innerWidth;
     var rt;
     window.addEventListener('resize', function () {
+      if (window.innerWidth === lastW) return;
+      lastW = window.innerWidth;
       clearTimeout(rt);
       rt = setTimeout(function () { tracks.forEach(build); }, 250);
     });

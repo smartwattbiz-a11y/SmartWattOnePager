@@ -191,9 +191,7 @@ h1, h2, h3 { font-family: var(--font-display); }
 
 .grain {
   position: fixed;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
+  inset: 0;
   pointer-events: none;
   z-index: 4;
   opacity: var(--grain-o);
@@ -575,13 +573,14 @@ html.js .cs-h:not(.is-first) { opacity: 0; }
   animation: scroll-x var(--mq-dur, 30s) linear infinite;
   will-change: transform;
   backface-visibility: hidden;
-  transform: translateZ(0);
 }
 .marquee:hover .marquee-track { animation-play-state: paused; }
 .marquee[data-direction="right"] .marquee-track { animation-direction: reverse; }
+/* --mq-shift is set in JS to one set's exact pixel width (a px transform
+   stays on the GPU compositor; a % transform may not) */
 @keyframes scroll-x {
   from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(var(--mq-shift, -50%), 0, 0); }
 }
 
 .marquee-group {
@@ -704,6 +703,9 @@ html.pin .stage-dots {
   letter-spacing: -0.04em;
   display: flex;
   align-items: baseline;
+  /* symmetric padding so background-clip:text doesn't crop the trailing
+     glyph (e.g. the % ) when negative letter-spacing shrinks the paint box */
+  padding-inline: 0.16em;
   background: linear-gradient(120deg, var(--ink) 12%, var(--accent, var(--leaf)) 85%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -825,6 +827,8 @@ html[data-theme="light"] .stat-card[data-accent="sun"] { --accent: #558b2f; }
   letter-spacing: -0.03em;
   display: flex;
   align-items: baseline;
+  /* room so the trailing % isn't cropped by background-clip:text */
+  padding-right: 0.14em;
   background: linear-gradient(135deg, var(--ink) 30%, var(--accent));
   -webkit-background-clip: text;
   background-clip: text;
