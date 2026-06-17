@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Why Hydroponics? — Farmspherica Innovations</title>
-  <meta name="description" content="An animated, scrolling infographic on why hydroponics wins: 90% less water, 3× faster growth, zero pesticides, 365 growing days a year. By Farmspherica Innovations." />
-  <meta name="theme-color" id="metaTheme" content="#fdfefc" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%A7%3C/text%3E%3C/svg%3E" />
+  <title>Why SmartWatt? — See every watt in your home</title>
+  <meta name="description" content="An animated, scrolling infographic on why SmartWatt wins: 30% lower bills, 3× faster to catch waste, 0 blind spots, 24/7 live monitoring. Real-time, per-circuit energy intelligence." />
+  <meta name="theme-color" id="metaTheme" content="#f3f6fb" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/styles.css" />
   <script>
     document.documentElement.classList.add('js');
     try {
       /* default is light; only honour an explicit saved dark preference */
-      if (localStorage.getItem('fs-theme') === 'dark') {
+      if (localStorage.getItem('sw-theme') === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
       }
     } catch (e) {}
@@ -28,9 +28,9 @@
   <!-- Loader curtain -->
   <div class="loader" id="loader" aria-hidden="true">
     <div class="loader-inner">
-      <span class="loader-mark">FARMSPHERICA<span class="dot">.</span></span>
+      <span class="loader-mark">SMART<span class="dot">WATT</span></span>
       <span class="loader-line"><span class="loader-line-fill"></span></span>
-      <span class="loader-tag">growing without soil…</span>
+      <span class="loader-tag">reading your circuits…</span>
     </div>
   </div>
 
@@ -41,12 +41,12 @@
   <div class="grain" aria-hidden="true"></div>
 
   <header class="nav" id="nav">
-    <a class="nav-logo" href="#top">FARMSPHERICA<span class="dot">.</span></a>
+    <a class="nav-logo" href="#top">SMART<span class="dot">WATT</span></a>
     <nav class="nav-links" aria-label="Sections">
       <a href="#numbers">The numbers</a>
       <a href="#why">Why it wins</a>
     </nav>
-    <a class="nav-cta" href="#join">Join us</a>
+    <a class="nav-cta" href="#join">Connect meter</a>
     <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark mode" aria-pressed="true">
       <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="3.6" />
@@ -64,96 +64,105 @@
   <main id="top">
 
     <!-- ============ SCROLL CUTSCENE ============ -->
-    <section class="cutscene" id="intro" aria-label="Intro: how a hydroponic farm works">
+    <section class="cutscene" id="intro" aria-label="Intro: how SmartWatt sees your home's energy">
       <div class="cutscene-stage" id="csStage">
-        <p class="cs-kicker" id="csKicker">Farmspherica presents</p>
+        <p class="cs-kicker" id="csKicker">SmartWatt presents</p>
 
         <div class="cs-headlines" aria-live="polite">
-          <h2 class="cs-h is-first"><span class="cs-h-in">FORGET <span class="grad-text">SOIL.</span></span></h2>
-          <h2 class="cs-h"><span class="cs-h-in">GROW ON <span class="grad-text">WATER.</span></span></h2>
-          <h2 class="cs-h"><span class="cs-h-in">WELCOME TO <span class="grad-text">HYDROPONICS.</span></span></h2>
+          <h2 class="cs-h is-first"><span class="cs-h-in">STOP <span class="grad-text">GUESSING.</span></span></h2>
+          <h2 class="cs-h"><span class="cs-h-in">SEE EVERY <span class="grad-text">WATT.</span></span></h2>
+          <h2 class="cs-h"><span class="cs-h-in">MEET <span class="grad-text">SMARTWATT.</span></span></h2>
         </div>
 
         <div class="cs-art" id="csArt">
-          <!-- hand-drawn hydroponic NFT system: channel, net pots, plants,
-               roots, recirculating loop, reservoir + pump, grow light -->
+          <!-- hand-drawn home energy system: grid feed → meter → SmartWatt hub
+               → breaker bus → appliances, with electrons flowing the line -->
           <svg class="cs-svg" viewBox="0 0 760 520" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 
             <g class="cs-pipes">
-              <rect class="cs-draw" x="120" y="330" width="520" height="46" rx="23" pathLength="1" />
-              <path class="cs-draw" d="M194 306h52l-10 26h-32z" pathLength="1" />
-              <path class="cs-draw" d="M354 306h52l-10 26h-32z" pathLength="1" />
-              <path class="cs-draw" d="M514 306h52l-10 26h-32z" pathLength="1" />
-              <path class="cs-draw" d="M640 353h36v62" pathLength="1" />
-              <path class="cs-draw" d="M120 353H86v119h479" pathLength="1" />
-              <rect class="cs-draw" x="565" y="415" width="150" height="75" rx="12" pathLength="1" />
-              <circle class="cs-draw" cx="612" cy="462" r="11" pathLength="1" />
-              <path class="cs-draw" d="M612 451v22M601 462h22" pathLength="1" />
+              <!-- main power bus -->
+              <rect class="cs-draw" x="120" y="330" width="520" height="46" rx="10" pathLength="1" />
+              <!-- circuit taps on top of the bus -->
+              <path class="cs-draw" d="M198 306h44v24h-44z" pathLength="1" />
+              <path class="cs-draw" d="M358 306h44v24h-44z" pathLength="1" />
+              <path class="cs-draw" d="M518 306h44v24h-44z" pathLength="1" />
+              <!-- feed from grid (left) and run to breaker panel (right) -->
+              <path class="cs-draw" d="M120 353H86v119h150" pathLength="1" />
+              <path class="cs-draw" d="M640 353h40v-150h-150" pathLength="1" />
+              <!-- breaker panel (top-right) -->
+              <rect class="cs-draw" x="486" y="150" width="160" height="86" rx="10" pathLength="1" />
+              <path class="cs-draw" d="M512 176h44M512 196h44M512 216h44M590 176h28M590 196h28M590 216h28" pathLength="1" />
+              <!-- smart meter box (bottom-left) -->
+              <rect class="cs-draw" x="150" y="430" width="150" height="64" rx="10" pathLength="1" />
             </g>
 
             <g class="cs-arrows">
               <polyline points="78 414 86 402 94 414" />
-              <polyline points="330 464 318 472 330 480" />
+              <polyline points="236 484 224 472 236 460" />
             </g>
 
             <g class="cs-waterg">
-              <rect class="cs-fill" x="572" y="448" width="136" height="35" rx="6" />
-              <path class="cs-wave cs-draw" d="M132 360q16-8 32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0t32 0" pathLength="1" />
-              <circle class="cs-drop" cx="145" cy="350" r="4.5" />
-              <circle class="cs-drop" cx="145" cy="352" r="4" />
-              <circle class="cs-drop" cx="145" cy="349" r="3.5" />
+              <!-- meter readout fill -->
+              <rect class="cs-fill" x="160" y="440" width="130" height="30" rx="5" />
+              <!-- the live energy line travelling the bus -->
+              <path class="cs-wave cs-draw" d="M132 353h496" pathLength="1" />
+              <!-- electrons flowing along the bus -->
+              <circle class="cs-drop" cx="140" cy="353" r="5" />
+              <circle class="cs-drop" cx="140" cy="353" r="4.5" />
+              <circle class="cs-drop" cx="140" cy="353" r="4" />
             </g>
 
             <g class="cs-roots">
-              <path class="cs-draw" d="M214 332c-3 8 3 12 0 20m12-20c3 8-3 12 0 20" pathLength="1" />
-              <path class="cs-draw" d="M374 332c-3 8 3 12 0 20m12-20c3 8-3 12 0 20" pathLength="1" />
-              <path class="cs-draw" d="M534 332c-3 8 3 12 0 20m12-20c3 8-3 12 0 20" pathLength="1" />
+              <path class="cs-draw" d="M220 306v-26" pathLength="1" />
+              <path class="cs-draw" d="M380 306v-26" pathLength="1" />
+              <path class="cs-draw" d="M540 306v-26" pathLength="1" />
             </g>
 
             <g class="cs-plants">
+              <!-- appliance 1: light bulb -->
               <g class="cs-plant">
-                <path class="cs-draw" d="M220 306v-38" pathLength="1" />
-                <path class="cs-draw" d="M220 282c0-9.4-7.3-14-16.9-14 0 9.4 7.3 14 16.9 14Z" pathLength="1" />
-                <path class="cs-draw" d="M220 274c0-9.4 7.3-14 16.9-14 0 9.4-7.3 14-16.9 14Z" pathLength="1" />
+                <circle class="cs-draw" cx="220" cy="256" r="20" pathLength="1" />
+                <path class="cs-draw" d="M212 274h16M214 280h12" pathLength="1" />
+                <path class="cs-draw" d="M214 250c0-6 12-6 12 0" pathLength="1" />
               </g>
+              <!-- appliance 2: monitor / fridge -->
               <g class="cs-plant">
-                <path class="cs-draw" d="M380 306v-88" pathLength="1" />
-                <path class="cs-draw" d="M380 262c0-14.4-11.2-24-26-24 0 14.4 11.2 24 26 24Z" pathLength="1" />
-                <path class="cs-draw" d="M380 246c0-14.4 11.2-24 26-24 0 14.4-11.2 24-26 24Z" pathLength="1" />
-                <path class="cs-draw" d="M380 230c0-10.8-8.4-16-19.5-16 0 10.8 8.4 16 19.5 16Z" pathLength="1" />
-                <circle class="cs-draw" cx="380" cy="212" r="5" pathLength="1" />
+                <rect class="cs-draw" x="352" y="214" width="56" height="66" rx="6" pathLength="1" />
+                <path class="cs-draw" d="M362 230h36M362 244h24" pathLength="1" />
               </g>
+              <!-- appliance 3: power plug -->
               <g class="cs-plant">
-                <path class="cs-draw" d="M540 306v-66" pathLength="1" />
-                <path class="cs-draw" d="M540 268c0-12.2-9.5-18-22.1-18 0 12.2 9.5 18 22.1 18Z" pathLength="1" />
-                <path class="cs-draw" d="M540 252c0-12.2 9.5-18 22.1-18 0 12.2-9.5 18-22.1 18Z" pathLength="1" />
+                <path class="cs-draw" d="M524 280v-18a16 16 0 0 1 32 0v18z" pathLength="1" />
+                <path class="cs-draw" d="M532 244v-16M548 244v-16" pathLength="1" />
               </g>
             </g>
 
             <g class="cs-light">
-              <rect class="cs-draw" x="230" y="118" width="300" height="16" rx="8" pathLength="1" />
-              <path class="cs-draw" d="M330 92v26M430 92v26" pathLength="1" />
+              <!-- SmartWatt hub display, mounted above the bus -->
+              <rect class="cs-draw" x="300" y="92" width="160" height="44" rx="10" pathLength="1" />
+              <path class="cs-draw" d="M356 136v14M404 136v14" pathLength="1" />
+              <!-- mini bar chart on the hub screen -->
+              <path class="cs-draw" d="M322 124v-14M338 124v-22M354 124v-10M370 124v-26M386 124v-16M402 124v-20M418 124v-12M434 124v-24" pathLength="1" />
               <g class="cs-rays">
-                <line x1="255" y1="146" x2="255" y2="168" />
-                <line x1="315" y1="146" x2="315" y2="168" />
-                <line x1="380" y1="146" x2="380" y2="168" />
-                <line x1="445" y1="146" x2="445" y2="168" />
-                <line x1="505" y1="146" x2="505" y2="168" />
+                <line x1="320" y1="160" x2="320" y2="182" />
+                <line x1="360" y1="160" x2="360" y2="182" />
+                <line x1="400" y1="160" x2="400" y2="182" />
+                <line x1="440" y1="160" x2="440" y2="182" />
               </g>
             </g>
 
             <g class="cs-sparks">
-              <path d="M300 172v16M292 180h16" />
-              <path d="M470 156v16M462 164h16" />
-              <path d="M170 222v16M162 230h16" />
-              <path d="M610 196v16M602 204h16" />
+              <path d="M220 212v14M213 219h14" />
+              <path d="M380 196v14M373 203h14" />
+              <path d="M540 232v14M533 239h14" />
+              <path d="M612 130v14M605 137h14" />
             </g>
           </svg>
         </div>
 
         <div class="cs-cue" id="csCue">
           <span class="scroll-cue-track"><span class="scroll-cue-dot"></span></span>
-          <span class="scroll-cue-text">scroll to grow</span>
+          <span class="scroll-cue-text">scroll to power up</span>
         </div>
       </div>
     </section>
@@ -165,19 +174,19 @@
       <div class="hero-glow hero-glow-b" aria-hidden="true"></div>
 
       <div class="hero-inner">
-        <p class="hero-kicker" data-intro>The case for growing without soil</p>
+        <p class="hero-kicker" data-intro>Real-time energy intelligence for every home</p>
         <h1 class="hero-title">
           <span class="line"><span class="line-inner">WHY</span></span>
-          <span class="line"><span class="line-inner grad-text">HYDROPONICS?</span></span>
+          <span class="line"><span class="line-inner grad-text">SMARTWATT?</span></span>
         </h1>
         <p class="hero-sub" data-intro>
-          Farms that run on water use <strong>90% less</strong> of it, grow food
-          <strong>3× faster</strong>, and never touch a pesticide.
-          Here’s the case for ditching dirt — in four numbers.
+          Homes that watch their power cut bills by <strong>30%</strong>, catch waste
+          <strong>3× faster</strong>, and never get a surprise on the meter.
+          Here’s the case for seeing every watt — in four numbers.
         </p>
         <div class="hero-actions" data-intro>
           <a class="btn btn-solid" href="#numbers">See the numbers</a>
-          <a class="btn btn-ghost" href="#join">Join Farmspherica</a>
+          <a class="btn btn-ghost" href="#join">Connect your meter</a>
         </div>
       </div>
 
@@ -192,24 +201,14 @@
       <div class="marquee-lane">
         <div class="marquee-track">
           <div class="marquee-group">
-            <span>No soil</span><i class="mq-dot"></i>
-            <span>90% less water</span><i class="mq-dot"></i>
-            <span>3× faster growth</span><i class="mq-dot"></i>
-            <span>Zero pesticides</span><i class="mq-dot"></i>
-            <span>365 days a year</span><i class="mq-dot"></i>
-            <span>No weeds</span><i class="mq-dot"></i>
-            <span>Any climate</span><i class="mq-dot"></i>
-            <span>More yield per m²</span><i class="mq-dot"></i>
-          </div>
-          <div class="marquee-group" aria-hidden="true">
-            <span>No soil</span><i class="mq-dot"></i>
-            <span>90% less water</span><i class="mq-dot"></i>
-            <span>3× faster growth</span><i class="mq-dot"></i>
-            <span>Zero pesticides</span><i class="mq-dot"></i>
-            <span>365 days a year</span><i class="mq-dot"></i>
-            <span>No weeds</span><i class="mq-dot"></i>
-            <span>Any climate</span><i class="mq-dot"></i>
-            <span>More yield per m²</span><i class="mq-dot"></i>
+            <span>Real-time</span><i class="mq-dot"></i>
+            <span>Every circuit</span><i class="mq-dot"></i>
+            <span>30% lower bills</span><i class="mq-dot"></i>
+            <span>Live alerts</span><i class="mq-dot"></i>
+            <span>Per-appliance</span><i class="mq-dot"></i>
+            <span>24/7 monitoring</span><i class="mq-dot"></i>
+            <span>kWh insights</span><i class="mq-dot"></i>
+            <span>Catch waste early</span><i class="mq-dot"></i>
           </div>
         </div>
       </div>
@@ -218,7 +217,7 @@
     <!-- ============ STATS SHOWCASE ============ -->
     <section class="stats" id="numbers">
       <div class="section-head" data-reveal>
-        <p class="kicker">Proof, not promises</p>
+        <p class="kicker">Proof, not guesswork</p>
         <h2>The numbers speak<br /><span class="grad-text">for themselves.</span></h2>
         <p class="section-hint">keep scrolling — the numbers tell the story</p>
       </div>
@@ -227,63 +226,55 @@
 
         <div class="stats-track" id="statsTrack">
 
-          <div class="stat-slide" data-accent="water">
+          <div class="stat-slide" data-accent="amber">
             <div class="slide-inner">
               <div class="slide-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 3.2C8.5 7.4 6 10.6 6 13.6a6 6 0 0 0 12 0c0-3-2.5-6.2-6-10.4Z" />
-                  <path d="M9.1 14.1a3 3 0 0 0 2.2 2.9" />
+                  <path d="M4 15l5-5 4 3 6-7" /><path d="M19 6h-4M19 6v4" />
                 </svg>
               </div>
-              <div class="slide-value"><span class="num" data-from="0" data-to="90">90</span><span class="suffix">%</span></div>
-              <p class="slide-label">less water</p>
-              <p class="slide-caption">Closed-loop irrigation reuses every single drop until a plant drinks it. The field can keep its sprinklers.</p>
+              <div class="slide-value"><span class="num" data-from="0" data-to="30">30</span><span class="suffix">%</span></div>
+              <p class="slide-label">lower bills</p>
+              <p class="slide-caption">When you can see exactly where the power goes, the waste has nowhere to hide. Households trim around a third off the bill.</p>
             </div>
           </div>
 
-          <div class="stat-slide" data-accent="leaf">
+          <div class="stat-slide" data-accent="teal">
             <div class="slide-inner">
               <div class="slide-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 21v-7.5" />
-                  <path d="M12 13.5C12 9.9 9.2 7.5 5.5 7.5c0 3.6 2.8 6 6.5 6Z" />
-                  <path d="M12 11.5c0-3 2.5-5 5.5-5 0 3-2.5 5-5.5 5Z" />
+                  <path d="M13 2 4 14h7l-1 8 9-12h-7z" />
                 </svg>
               </div>
               <div class="slide-value"><span class="num" data-from="0" data-to="3">3</span><span class="suffix">×</span></div>
-              <p class="slide-label">faster growth</p>
-              <p class="slide-caption">No digging, no searching — nutrients arrive straight at the root zone, so plants spend the saved energy growing.</p>
+              <p class="slide-label">faster to catch waste</p>
+              <p class="slide-caption">Live, per-circuit readings flag a spike the moment it starts — not 30 days later when the bill lands.</p>
             </div>
           </div>
 
-          <div class="stat-slide" data-accent="mint">
+          <div class="stat-slide" data-accent="sky">
             <div class="slide-inner">
               <div class="slide-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 3.2 19 6v5.2c0 4.6-3 8.6-7 9.6-4-1-7-5-7-9.6V6l7-2.8Z" />
-                  <path d="m8.8 11.6 2.3 2.3 4.3-4.3" />
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" /><circle cx="12" cy="12" r="3" />
                 </svg>
               </div>
               <div class="slide-value"><span class="num" data-from="100" data-to="0">0</span><span class="suffix"></span></div>
-              <p class="slide-label">pesticides</p>
-              <p class="slide-caption">No soil means no soil-borne pests, which means nothing to spray and nothing to wash off. Ever.</p>
+              <p class="slide-label">blind spots</p>
+              <p class="slide-caption">Every breaker, every appliance, mapped and measured. Nothing in your home draws power unseen.</p>
             </div>
           </div>
 
-          <div class="stat-slide" data-accent="sun">
+          <div class="stat-slide" data-accent="emerald">
             <div class="slide-inner">
               <div class="slide-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="3.6" />
-                  <line x1="12" y1="2.8" x2="12" y2="5" /><line x1="12" y1="19" x2="12" y2="21.2" />
-                  <line x1="2.8" y1="12" x2="5" y2="12" /><line x1="19" y1="12" x2="21.2" y2="12" />
-                  <line x1="5.5" y1="5.5" x2="7.1" y2="7.1" /><line x1="16.9" y1="16.9" x2="18.5" y2="18.5" />
-                  <line x1="18.5" y1="5.5" x2="16.9" y2="7.1" /><line x1="7.1" y1="16.9" x2="5.5" y2="18.5" />
+                  <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" />
                 </svg>
               </div>
-              <div class="slide-value"><span class="num" data-from="0" data-to="365">365</span><span class="suffix"></span></div>
-              <p class="slide-label">days a year</p>
-              <p class="slide-caption">Indoors, every season is growing season. Frost and drought simply aren’t invited.</p>
+              <div class="slide-value"><span class="num" data-from="0" data-to="24">24</span><span class="suffix">/7</span></div>
+              <p class="slide-label">live monitoring</p>
+              <p class="slide-caption">SmartWatt never sleeps. Your home’s energy is read, logged and watched every second of every day.</p>
             </div>
           </div>
 
@@ -292,71 +283,63 @@
         <div class="stats-grid-wrap" id="statsGridWrap">
           <div class="stats-grid" id="statsGrid">
 
-            <article class="stat-card" data-accent="water" aria-label="90 percent less water">
+            <article class="stat-card" data-accent="amber" aria-label="30 percent lower bills">
               <span class="card-glow" aria-hidden="true"></span>
               <span class="card-index" aria-hidden="true">01</span>
               <div class="stat-icon" aria-hidden="true">
                 <span class="icon-ring"></span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 3.2C8.5 7.4 6 10.6 6 13.6a6 6 0 0 0 12 0c0-3-2.5-6.2-6-10.4Z" />
-                  <path d="M9.1 14.1a3 3 0 0 0 2.2 2.9" />
+                  <path d="M4 15l5-5 4 3 6-7" /><path d="M19 6h-4M19 6v4" />
                 </svg>
               </div>
-              <div class="stat-value"><span class="num" data-from="0" data-to="90">90</span><span class="suffix">%</span></div>
-              <h3 class="stat-label">less water</h3>
-              <p class="stat-caption">Closed-loop irrigation reuses every drop until a plant drinks it. Soil can’t compete.</p>
-              <div class="stat-meter" aria-hidden="true"><span class="meter-fill" data-meter="90" style="width:90%"></span></div>
+              <div class="stat-value"><span class="num" data-from="0" data-to="30">30</span><span class="suffix">%</span></div>
+              <h3 class="stat-label">lower bills</h3>
+              <p class="stat-caption">See where the power goes and the waste disappears — about a third off the bill.</p>
+              <div class="stat-meter" aria-hidden="true"><span class="meter-fill" data-meter="70" style="width:70%"></span></div>
             </article>
 
-            <article class="stat-card" data-accent="leaf" aria-label="3 times faster growth">
+            <article class="stat-card" data-accent="teal" aria-label="3 times faster to catch waste">
               <span class="card-glow" aria-hidden="true"></span>
               <span class="card-index" aria-hidden="true">02</span>
               <div class="stat-icon" aria-hidden="true">
                 <span class="icon-ring"></span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 21v-7.5" />
-                  <path d="M12 13.5C12 9.9 9.2 7.5 5.5 7.5c0 3.6 2.8 6 6.5 6Z" />
-                  <path d="M12 11.5c0-3 2.5-5 5.5-5 0 3-2.5 5-5.5 5Z" />
+                  <path d="M13 2 4 14h7l-1 8 9-12h-7z" />
                 </svg>
               </div>
               <div class="stat-value"><span class="num" data-from="0" data-to="3">3</span><span class="suffix">×</span></div>
-              <h3 class="stat-label">faster growth</h3>
-              <p class="stat-caption">Nutrients go straight to the root zone, so plants stop searching and start growing.</p>
+              <h3 class="stat-label">faster to catch waste</h3>
+              <p class="stat-caption">Live readings flag a spike the instant it starts — not 30 days later.</p>
               <div class="stat-meter" aria-hidden="true"><span class="meter-fill" data-meter="100" style="width:100%"></span></div>
             </article>
 
-            <article class="stat-card" data-accent="mint" aria-label="Zero pesticides">
+            <article class="stat-card" data-accent="sky" aria-label="Zero blind spots">
               <span class="card-glow" aria-hidden="true"></span>
               <span class="card-index" aria-hidden="true">03</span>
               <div class="stat-icon" aria-hidden="true">
                 <span class="icon-ring"></span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 3.2 19 6v5.2c0 4.6-3 8.6-7 9.6-4-1-7-5-7-9.6V6l7-2.8Z" />
-                  <path d="m8.8 11.6 2.3 2.3 4.3-4.3" />
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" /><circle cx="12" cy="12" r="3" />
                 </svg>
               </div>
               <div class="stat-value"><span class="num" data-from="100" data-to="0">0</span><span class="suffix"></span></div>
-              <h3 class="stat-label">pesticides</h3>
-              <p class="stat-caption">No soil means no soil-borne pests — and nothing to spray. Ever.</p>
+              <h3 class="stat-label">blind spots</h3>
+              <p class="stat-caption">Every breaker and appliance mapped — nothing draws power unseen.</p>
               <div class="stat-meter" aria-hidden="true"><span class="meter-fill" data-meter="100" style="width:100%"></span></div>
             </article>
 
-            <article class="stat-card" data-accent="sun" aria-label="365 growing days a year">
+            <article class="stat-card" data-accent="emerald" aria-label="24/7 live monitoring">
               <span class="card-glow" aria-hidden="true"></span>
               <span class="card-index" aria-hidden="true">04</span>
               <div class="stat-icon" aria-hidden="true">
                 <span class="icon-ring"></span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="3.6" />
-                  <line x1="12" y1="2.8" x2="12" y2="5" /><line x1="12" y1="19" x2="12" y2="21.2" />
-                  <line x1="2.8" y1="12" x2="5" y2="12" /><line x1="19" y1="12" x2="21.2" y2="12" />
-                  <line x1="5.5" y1="5.5" x2="7.1" y2="7.1" /><line x1="16.9" y1="16.9" x2="18.5" y2="18.5" />
-                  <line x1="18.5" y1="5.5" x2="16.9" y2="7.1" /><line x1="7.1" y1="16.9" x2="5.5" y2="18.5" />
+                  <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" />
                 </svg>
               </div>
-              <div class="stat-value"><span class="num" data-from="0" data-to="365">365</span><span class="suffix"></span></div>
-              <h3 class="stat-label">days a year</h3>
-              <p class="stat-caption">Indoor climate control turns every season into growing season.</p>
+              <div class="stat-value"><span class="num" data-from="0" data-to="24">24</span><span class="suffix">/7</span></div>
+              <h3 class="stat-label">live monitoring</h3>
+              <p class="stat-caption">Read, logged and watched every second of every day.</p>
               <div class="stat-meter" aria-hidden="true"><span class="meter-fill" data-meter="100" style="width:100%"></span></div>
             </article>
 
@@ -376,91 +359,85 @@
     <!-- ============ BENEFITS ============ -->
     <section class="benefits" id="why">
 
-      <!-- 01 · WATER -->
+      <!-- 01 · SEE -->
       <section class="benefit">
-        <span class="ghost" data-drift="-1" aria-hidden="true">WATER</span>
+        <span class="ghost" data-drift="-1" aria-hidden="true">SEE</span>
         <div class="benefit-grid">
           <div class="benefit-copy" data-reveal="left">
             <span class="benefit-index">01</span>
-            <h3>Water that<br /><span class="hl hl-water">never quits.</span></h3>
+            <h3>See every<br /><span class="hl hl-amber">circuit, live.</span></h3>
             <p>
-              In a field, most irrigation drains straight past the roots and disappears.
-              A hydroponic system is a closed loop — the same water cycles through the
-              root zone again and again, and the only way out is through a plant.
-              Ten litres end up doing the work of a hundred.
+              Your old meter reports one number for the whole house, once a month.
+              SmartWatt reads every circuit at once and keeps reading — so the kitchen,
+              the AC, the water heater and the car charger each show up as their own
+              live line. The moment something switches on, you see it.
             </p>
           </div>
           <div class="benefit-viz" data-reveal="right">
-            <div class="viz viz-water" id="vizWater">
-              <figure class="tube">
-                <div class="tube-glass"><div class="tube-fill soil" data-fill="96" style="height:96%"></div></div>
-                <figcaption>Soil farming<span>100&nbsp;L</span></figcaption>
-              </figure>
-              <figure class="tube">
-                <div class="tube-glass"><div class="tube-fill hydro" data-fill="10" style="height:10%"></div></div>
-                <figcaption>Hydroponics<span>10&nbsp;L</span></figcaption>
-              </figure>
-              <p class="viz-note">Water needed for the same harvest</p>
+            <div class="viz viz-see" id="vizSee">
+              <div class="circuits">
+                <div class="circuit"><span class="circuit-name">Kitchen</span><span class="circuit-bar"><span class="circuit-fill" data-load="64" style="width:64%"></span></span></div>
+                <div class="circuit"><span class="circuit-name">HVAC</span><span class="circuit-bar"><span class="circuit-fill" data-load="88" style="width:88%"></span></span></div>
+                <div class="circuit"><span class="circuit-name">Water heater</span><span class="circuit-bar"><span class="circuit-fill" data-load="52" style="width:52%"></span></span></div>
+                <div class="circuit"><span class="circuit-name">EV charger</span><span class="circuit-bar"><span class="circuit-fill" data-load="74" style="width:74%"></span></span></div>
+                <div class="circuit"><span class="circuit-name">Lighting</span><span class="circuit-bar"><span class="circuit-fill" data-load="33" style="width:33%"></span></span></div>
+              </div>
+              <p class="viz-note">Live load, circuit by circuit</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 02 · SPEED -->
+      <!-- 02 · CATCH -->
       <section class="benefit">
-        <span class="ghost" data-drift="1" aria-hidden="true">SPEED</span>
+        <span class="ghost" data-drift="1" aria-hidden="true">CATCH</span>
         <div class="benefit-grid flip">
           <div class="benefit-copy" data-reveal="right">
             <span class="benefit-index">02</span>
-            <h3>Roots that<br /><span class="hl hl-leaf">never go hunting.</span></h3>
+            <h3>Catch the spike<br /><span class="hl hl-teal">before the bill.</span></h3>
             <p>
-              Soil makes a plant work for its dinner — roots burrow and branch, burning
-              energy just searching for food. Hydroponics hands a perfectly balanced meal
-              straight to the root zone, so all of that energy goes up into leaves and
-              fruit instead. Same seed, triple the pace.
+              A faulty fridge, a heater left on, a pump that won’t cut off — on a normal
+              meter you find out when the bill arrives. SmartWatt watches the live curve
+              and pings you the second usage jumps where it shouldn’t, so a small problem
+              never becomes a big number.
             </p>
           </div>
           <div class="benefit-viz" data-reveal="left">
-            <div class="viz viz-speed" id="vizSpeed">
-              <div class="race">
-                <div class="race-label"><span>Hydroponics</span><span>30 days to harvest</span></div>
-                <div class="race-bar"><span class="race-fill hydro" data-w="100" style="width:100%"></span></div>
-              </div>
-              <div class="race">
-                <div class="race-label"><span>Soil</span><span>90 days to harvest</span></div>
-                <div class="race-bar"><span class="race-fill soil" data-w="100" style="width:100%"></span></div>
-              </div>
-              <span class="race-chip" id="raceChip">3× faster 🏁</span>
-              <p class="viz-note">Same crop, racing to harvest day</p>
+            <div class="viz viz-catch" id="vizCatch">
+              <svg class="chart" viewBox="0 0 320 150" fill="none" aria-hidden="true">
+                <line class="chart-axis" x1="14" y1="126" x2="312" y2="126" />
+                <polyline class="chart-line" points="14,110 48,104 82,112 116,96 150,108 184,58 210,40 236,92 270,86 306,90" pathLength="1" />
+                <circle class="chart-alert" cx="210" cy="40" r="6" />
+              </svg>
+              <span class="alert-chip" id="alertChip">⚡ Spike caught</span>
+              <p class="viz-note">Live usage — anomaly flagged instantly</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 03 · PURITY -->
+      <!-- 03 · CUT -->
       <section class="benefit">
-        <span class="ghost" data-drift="-1" aria-hidden="true">PURITY</span>
+        <span class="ghost" data-drift="-1" aria-hidden="true">CUT</span>
         <div class="benefit-grid">
           <div class="benefit-copy" data-reveal="left">
             <span class="benefit-index">03</span>
-            <h3>Nothing to spray.<br /><span class="hl hl-mint">Nothing to wash off.</span></h3>
+            <h3>Pay for power<br /><span class="hl hl-emerald">you actually use.</span></h3>
             <p>
-              Most crop pests live in dirt — so we removed the dirt. Indoors, on water,
-              crops grow with no herbicides, no fungicides and no insecticides.
-              Your salad arrives exactly as it grew: clean.
+              Standby drain, peak-hour habits and that one always-on appliance quietly
+              inflate every bill. Once you can see them, you can cut them. Most homes
+              shave roughly a third off within the first few months — money that was
+              simply leaking away before.
             </p>
           </div>
           <div class="benefit-viz" data-reveal="right">
-            <div class="viz viz-clean" id="vizClean">
-              <svg class="shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 3.2 19 6v5.2c0 4.6-3 8.6-7 9.6-4-1-7-5-7-9.6V6l7-2.8Z" />
-                <path d="m8.8 11.6 2.3 2.3 4.3-4.3" />
-              </svg>
-              <div class="chips">
-                <span class="chip">0 herbicides</span>
-                <span class="chip">0 fungicides</span>
-                <span class="chip">0 insecticides</span>
+            <div class="viz viz-cut" id="vizCut">
+              <div class="bill">
+                <div class="bill-row"><span class="bill-label">Before</span><span class="bill-bar"><span class="bill-fill before" data-w="100" style="width:100%"></span></span><span class="bill-amt">$180</span></div>
+                <div class="bill-row"><span class="bill-label">With SmartWatt</span><span class="bill-bar"><span class="bill-fill after" data-w="70" style="width:70%"></span></span><span class="bill-amt">$126</span></div>
               </div>
+              <span class="save-chip" id="saveChip">−30% / month</span>
+              <p class="viz-note">Typical monthly bill, before vs after</p>
             </div>
           </div>
         </div>
@@ -472,33 +449,33 @@
         <div class="benefit-grid flip">
           <div class="benefit-copy" data-reveal="right">
             <span class="benefit-index">04</span>
-            <h3>Seasons are<br /><span class="hl hl-sun">now optional.</span></h3>
+            <h3>Always on,<br /><span class="hl hl-sky">always watching.</span></h3>
             <p>
-              Frost, drought, heatwave, monsoon — none of them get a vote indoors.
-              Light, temperature and humidity are dialled in by software, so harvest
-              day can land on any day of the year. All 365 of them.
+              Energy doesn’t keep office hours, so neither does SmartWatt. It samples your
+              home around the clock, builds a picture of a normal day, and quietly stands
+              guard the rest of the time. All 24 hours, all seven days — no gaps.
             </p>
           </div>
           <div class="benefit-viz" data-reveal="left">
-            <div class="viz viz-year" id="vizYear">
+            <div class="viz viz-clock" id="vizClock">
               <div class="ring-wrap">
                 <svg class="ring" viewBox="0 0 160 160" aria-hidden="true">
                   <defs>
                     <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop class="ring-stop-a" offset="0%" stop-color="#2E7D32" />
-                      <stop class="ring-stop-b" offset="55%" stop-color="#AED581" />
-                      <stop class="ring-stop-c" offset="100%" stop-color="#81D4FA" />
+                      <stop class="ring-stop-a" offset="0%" stop-color="#fbbf24" />
+                      <stop class="ring-stop-b" offset="55%" stop-color="#2dd4bf" />
+                      <stop class="ring-stop-c" offset="100%" stop-color="#38bdf8" />
                     </linearGradient>
                   </defs>
                   <circle class="ring-track" cx="80" cy="80" r="66" />
                   <circle class="ring-sweep" cx="80" cy="80" r="66" pathLength="100" stroke="url(#ringGrad)" />
                 </svg>
                 <div class="ring-center">
-                  <span class="ring-num" id="ringNum" data-from="0" data-to="365">365</span>
-                  <span class="ring-sub">growing days</span>
+                  <span class="ring-num" id="ringNum" data-from="0" data-to="24">24</span>
+                  <span class="ring-sub">hours / day</span>
                 </div>
               </div>
-              <p class="viz-note">One full lap around the calendar</p>
+              <p class="viz-note">A full day, sampled every second</p>
             </div>
           </div>
         </div>
@@ -511,24 +488,14 @@
       <div class="marquee-lane">
         <div class="marquee-track">
           <div class="marquee-group">
-            <span>Grow smarter</span><i class="mq-dot"></i>
-            <span>Grow cleaner</span><i class="mq-dot"></i>
-            <span>Grow faster</span><i class="mq-dot"></i>
-            <span>Grow anywhere</span><i class="mq-dot"></i>
-            <span>Grow smarter</span><i class="mq-dot"></i>
-            <span>Grow cleaner</span><i class="mq-dot"></i>
-            <span>Grow faster</span><i class="mq-dot"></i>
-            <span>Grow anywhere</span><i class="mq-dot"></i>
-          </div>
-          <div class="marquee-group" aria-hidden="true">
-            <span>Grow smarter</span><i class="mq-dot"></i>
-            <span>Grow cleaner</span><i class="mq-dot"></i>
-            <span>Grow faster</span><i class="mq-dot"></i>
-            <span>Grow anywhere</span><i class="mq-dot"></i>
-            <span>Grow smarter</span><i class="mq-dot"></i>
-            <span>Grow cleaner</span><i class="mq-dot"></i>
-            <span>Grow faster</span><i class="mq-dot"></i>
-            <span>Grow anywhere</span><i class="mq-dot"></i>
+            <span>Watch smarter</span><i class="mq-dot"></i>
+            <span>Waste less</span><i class="mq-dot"></i>
+            <span>Spend less</span><i class="mq-dot"></i>
+            <span>See everything</span><i class="mq-dot"></i>
+            <span>Watch smarter</span><i class="mq-dot"></i>
+            <span>Waste less</span><i class="mq-dot"></i>
+            <span>Spend less</span><i class="mq-dot"></i>
+            <span>See everything</span><i class="mq-dot"></i>
           </div>
         </div>
       </div>
@@ -537,18 +504,18 @@
     <!-- ============ CTA ============ -->
     <section class="cta" id="join">
       <div class="cta-glow" aria-hidden="true"></div>
-      <p class="kicker" data-reveal>The future of food is already growing</p>
+      <p class="kicker" data-reveal>Your home is already talking. Start listening.</p>
       <h2 class="cta-title" data-reveal>
-        JOIN<br /><span class="grad-text">FARMSPHERICA</span>
+        MEET<br /><span class="grad-text">SMARTWATT</span>
       </h2>
       <p class="cta-sub" data-reveal>
-        Bring hydroponic farming to your city, your campus, your rooftop.
-        We’ll handle the science — you watch it grow.
+        Plug the sensor onto your panel, connect your meter, and watch every watt in your
+        home come to life — in real time, on any screen.
       </p>
       <div class="cta-action" data-reveal>
-        <a class="btn-cta" id="ctaBtn" href="https://www.aavrt.com/" target="_blank" rel="noopener">
+        <a class="btn-cta" id="ctaBtn" href="https://smartwatt-dashboard.vercel.app/circuit-map" target="_blank" rel="noopener">
           <span class="pulse" aria-hidden="true"></span>
-          <span class="btn-cta-label">Start growing with us</span>
+          <span class="btn-cta-label">Connect your meter</span>
           <span class="btn-cta-arrow" aria-hidden="true">→</span>
         </a>
       </div>
@@ -557,8 +524,8 @@
   </main>
 
   <footer class="footer">
-    <span>© 2026 Farmspherica Innovations Pvt.&nbsp;Ltd.</span>
-    <span class="footer-tag">Choose Hydroponics 🌱</span>
+    <span>© 2026 SmartWatt</span>
+    <span class="footer-tag">See every watt ⚡</span>
     <span class="footer-credit">made by Avyaan Gupta</span>
   </footer>
 

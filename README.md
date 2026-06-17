@@ -1,11 +1,12 @@
-# 💧 "Why Hydroponics?" — Animated Infographic
+# ⚡ "Why SmartWatt?" — Animated Infographic
 
-A one-page scrolling infographic that sells the benefits of hydroponics, ending in a
-**Join Farmspherica** call-to-action. Built with **HTML + CSS + JS only** (no frameworks).
+A one-page scrolling infographic that sells real-time home energy monitoring,
+ending in a **Connect your meter** call-to-action. Built with **HTML + CSS + JS
+only** (no frameworks), themed around the [SmartWatt dashboard](https://smartwatt-dashboard.vercel.app/circuit-map).
 
 ## Run it
 
-Just open `index.html` in a browser, or serve it locally:
+Open `index.html` in a browser, or serve it locally:
 
 ```bash
 python3 -m http.server 8000
@@ -18,28 +19,26 @@ python3 -m http.server 8000
 
 | Feature | How |
 | --- | --- |
-| Scroll-driven opening cutscene (animejs.com-style): a hand-drawn hydroponic system SVG assembles itself — pipes draw, water circulates, plants grow, lights come on | **GSAP ScrollTrigger** pinned + scrubbed timeline over `pathLength`-normalized strokes |
-| Light/dark theme toggle (top-right): dark = deep forest original, light = white with green + green-gradient highlights only | CSS custom-property themes + `localStorage`, three.js uniforms retinted live |
-| Pinned stats showcase: each stat zoomed-in full screen, text scrubbing left → right with scroll-tied counters, then a zoom-out reveals the full 4-card grid | **GSAP** pin + scrub timeline |
-| Stat cards: gradient borders, conic icon shimmer, cursor spotlight, 3D tilt, animated meters | CSS `color-mix` + vanilla JS pointer handlers |
-| Stat animations replay every time the grid scrolls back into frame | re-arming IntersectionObserver + **anime.js** |
-| Smooth fade-in sections on scroll | **GSAP + ScrollTrigger** |
-| Sideways-moving text (marquees + giant ghost words that drift on scroll) | CSS keyframes + **GSAP** scrub |
-| 3D "living droplet" with orbit rings + spore particles in the hero | **three.js** (custom simplex-noise shader) |
-| Mini-infographics: water tubes, harvest race, shield draw, 365-day ring | anime.js one-shots via IntersectionObserver |
-| Loader curtain, scroll progress bar, magnetic CTA button | GSAP / anime.js / vanilla JS |
+| Scroll-driven opening cutscene: a hand-drawn home energy system wires itself up — bus + breaker panel draw on, the meter lights up, electrons flow the line, appliances power on, the SmartWatt hub switches on | **GSAP ScrollTrigger** pinned + scrubbed timeline over `pathLength`-normalised strokes |
+| Light/dark theme toggle (top-right): light = clean white slate, dark = electric dashboard | CSS custom-property themes + `localStorage`, three.js uniforms retinted live |
+| Pinned stats showcase: each stat fills the screen, the counter **lands on its value and holds**, then the reel slides to the next | **GSAP** pin + scrub timeline |
+| 4 stats: **30%** lower bills · **3×** faster to catch waste · **0** blind spots · **24/7** live monitoring | **anime.js** count-ups + drawn icons + meters, replay on every return |
+| 3D "energy core" with orbit rings + spark particles in the hero | **three.js** (custom simplex-noise plasma shader) |
+| Mini-infographics: live circuit loads, a usage chart that flags a spike, a before/after bill cut, a 24-hour ring | anime.js one-shots via IntersectionObserver |
+| Sideways marquees, loader, scroll progress bar, magnetic CTA | CSS + GSAP + anime.js |
 
 ## Design notes
 
-- Color scheme lifted from the Farmspherica brand at [aavrt.com](https://www.aavrt.com/):
-  forest `#2E7D32` · leaf `#AED581` · mint `#D0F0C0` · water `#81D4FA`, on a deep
-  forest-black canvas with subtle green gradient glows.
-- Typography: **Montserrat** (800/900, uppercase, tight) for display, **Inter** for body.
-- Everything degrades gracefully: with JS (or any CDN) unavailable, the page renders
-  fully readable in its final state, and `prefers-reduced-motion` is respected.
+- Palette pulled from the SmartWatt dashboard: amber `#fbbf24` (watt / energy),
+  teal `#2dd4bf`, sky `#38bdf8`, emerald `#34d399`, on a deep slate canvas.
+  Signature gradient runs warm → cool (amber → teal → sky): energy into smart tech.
+- Typography: **Plus Jakarta Sans** (the dashboard's own typeface).
+- Light mode is the default; dark mode is one tap away and remembered.
+- Everything degrades gracefully without JS/CDNs and respects `prefers-reduced-motion`.
+- Fluid type is sized so the longest words never overflow, from ~320px phones up.
 
 ```
-index.html        markup (hero, marquees, stats, 4 benefit sections, CTA)
-css/styles.css    all styling, responsive + reduced-motion rules
-js/main.js        three.js scene, anime.js counters/viz, GSAP scroll work
+index.html        markup (cutscene, hero, stats, 4 benefit sections, CTA)
+css/styles.css    all styling, theming, responsive + reduced-motion rules
+js/main.js        three.js core, anime.js counters/viz, GSAP scroll work
 ```

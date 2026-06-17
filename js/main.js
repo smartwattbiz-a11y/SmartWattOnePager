@@ -1,8 +1,8 @@
 /* ============================================================
-   WHY HYDROPONICS? — Farmspherica Innovations
+   WHY SMARTWATT? — real-time home energy intelligence
    anime.js  → stat counters, SVG line-drawing, mini-viz one-shots
    GSAP      → cutscene, pinned stats showcase, reveals, parallax
-   three.js  → hero "living droplet" 3D scene (theme-aware)
+   three.js  → hero "energy core" 3D scene (theme-aware)
    Everything degrades gracefully: if a library fails to load,
    the page stays fully readable in its final state.
    ============================================================ */
@@ -64,10 +64,10 @@
         btn.setAttribute('aria-pressed', String(light));
         btn.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
       }
-      if (meta) meta.content = light ? '#fdfefc' : '#04130b';
+      if (meta) meta.content = light ? '#f3f6fb' : '#060d1c';
       if (threeAPI) threeAPI.setTheme(light);
       if (persist) {
-        try { localStorage.setItem('fs-theme', light ? 'light' : 'dark'); } catch (e) {}
+        try { localStorage.setItem('sw-theme', light ? 'light' : 'dark'); } catch (e) {}
       }
     }
 
@@ -163,14 +163,14 @@
       }
     });
 
-    /* act i — the system assembles */
+    /* act i — the system wires itself up */
     tl.to(cue, { autoAlpha: 0, duration: 1 }, 0.3);
     tl.to(pipes, { strokeDashoffset: 0, duration: 6, stagger: 0.5, ease: 'power1.inOut' }, 1);
     if (fillRect) tl.to(fillRect, { scaleY: 1, duration: 2, ease: 'power2.out' }, 6.5);
     if (wave) tl.to(wave, { strokeDashoffset: 0, duration: 4 }, 7);
     tl.to(arrows, { autoAlpha: 1, duration: 1, stagger: 0.5 }, 8.5);
 
-    /* water starts circulating */
+    /* electricity starts flowing down the bus */
     drops.forEach(function (d, i) {
       var at = 9 + i * 4;
       tl.to(d, { autoAlpha: 1, duration: 0.6 }, at);
@@ -178,14 +178,14 @@
       tl.to(d, { autoAlpha: 0, duration: 0.6 }, at + 6.4);
     });
 
-    /* act ii — life shows up */
+    /* act ii — appliances connect and power on */
     if (hs[0]) tl.to(hs[0], { autoAlpha: 0, y: -46, duration: 2, ease: 'power2.in' }, 11.5);
     if (hs[1]) tl.to(hs[1], { autoAlpha: 1, y: 0, duration: 2, ease: 'power2.out' }, 13);
     tl.to(roots, { strokeDashoffset: 0, duration: 3, stagger: 0.6 }, 14);
     tl.to(plants, { autoAlpha: 1, scale: 1, duration: 4, stagger: 2.5, ease: 'back.out(1.3)' }, 14);
     tl.to(plantStrokes, { strokeDashoffset: 0, duration: 4, stagger: 0.45, ease: 'power1.inOut' }, 14.5);
 
-    /* act iii — lights on */
+    /* act iii — the SmartWatt hub lights up */
     tl.to(lightDraws, { strokeDashoffset: 0, duration: 3, stagger: 0.5, ease: 'power1.inOut' }, 22);
     tl.to(rays, { autoAlpha: 1, duration: 1, stagger: 0.5 }, 25);
     tl.to(sparks, { autoAlpha: 1, scale: 1, duration: 1.2, stagger: 0.7, ease: 'back.out(2)' }, 26.5);
@@ -240,14 +240,12 @@
     var SPEED = 150; // px per second — same feel on every screen width
 
     function build(track) {
-      /* remember the original single-group markup once */
       var unit = track._mqUnit;
       if (unit == null) {
         var first = track.querySelector('.marquee-group');
         unit = track._mqUnit = first ? first.innerHTML : track.innerHTML;
       }
 
-      /* measure one group's natural width */
       track.style.animation = 'none';
       track.innerHTML = '<div class="marquee-group">' + unit + '</div>';
       var unitW = track.firstElementChild.getBoundingClientRect().width;
@@ -255,31 +253,26 @@
 
       /* a "set" repeats the group until it comfortably overflows the viewport,
          so the seam never leaves a visible gap; two identical sets make the
-         loop perfectly seamless when we shift by exactly one set's width */
+         loop seamless when we shift by exactly one set's width */
       var perSet = Math.max(1, Math.ceil((window.innerWidth * 1.25) / unitW));
       var group = '<div class="marquee-group" aria-hidden="true">' + unit + '</div>';
       var set = '';
       for (var i = 0; i < perSet; i++) set += group;
       track.innerHTML = set + set;
 
-      /* Drive the animation with an exact PIXEL shift (one set width), not a
-         percentage. Percentage transforms can force Chrome to run the
-         animation on the main thread; a fixed px translate stays on the GPU
-         compositor, so it's as fluid as native scrolling. */
+      /* drive the animation with an exact PIXEL shift (one set width), not a
+         percentage — percentage transforms can fall to the main thread */
       var half = Math.round(track.scrollWidth / 2);
       track.style.setProperty('--mq-shift', '-' + half + 'px');
       track.style.setProperty('--mq-dur', (half / SPEED).toFixed(2) + 's');
 
-      void track.offsetWidth;   // flush layout before re-enabling the animation
+      void track.offsetWidth;
       track.style.animation = '';
     }
 
     var tracks = $$('.marquee-track');
     tracks.forEach(build);
 
-    /* rebuild only when the WIDTH actually changes — mobile browsers fire
-       resize on every scroll (URL bar show/hide), and rebuilding mid-scroll
-       would restart the animation and stutter */
     var lastW = window.innerWidth;
     var rt;
     window.addEventListener('resize', function () {
@@ -321,8 +314,6 @@
         scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: 1.2 }
       });
     });
-    /* note: the marquees run purely on a composited CSS animation now — no
-       scroll-linked transform on top, which is what made them stutter. */
   }
 
   function initHeroParallax() {
@@ -338,10 +329,9 @@
   }
 
   /* ---------------- stats showcase ----------------
-     Pinned sequence: each stat fills the screen zoomed-in while the
-     reel scrubs left → right (counters tied to scroll), then the view
-     zooms out to reveal the full four-card grid.
-     Grid animations replay every time you scroll back to them. */
+     Pinned: each stat fills the screen, the counter counts up and LANDS on its
+     target, the finished number is held (a pause), then the reel slides a full
+     slide to the next stat. Grid replays on every return. */
 
   function playGridStats() {
     if (!hasAnime || reduceMotion) return;
@@ -393,7 +383,6 @@
   function initStatsShowcase() {
     var grid = $('#statsGrid');
 
-    /* replay whenever the grid comes back into frame */
     if (hasAnime && !reduceMotion && grid) {
       onEveryEnter(grid, playGridStats, 0.35);
     }
@@ -411,13 +400,11 @@
             'perspective(900px) rotateX(' + ((0.5 - py) * 7).toFixed(2) + 'deg)' +
             ' rotateY(' + ((px - 0.5) * 7).toFixed(2) + 'deg) translateY(-6px)';
         });
-        card.addEventListener('pointerleave', function () {
-          card.style.transform = '';
-        });
+        card.addEventListener('pointerleave', function () { card.style.transform = ''; });
       });
     }
 
-    if (!PIN) return; // static grid without GSAP / with reduced motion
+    if (!PIN) return;
 
     var stage = $('#statsStage');
     var track = $('#statsTrack');
@@ -465,8 +452,7 @@
           start);
       }
 
-      /* 2 — the counter runs and LANDS on its target value
-         (scrubbed, so it replays cleanly both directions) */
+      /* 2 — the counter runs and LANDS on its target value */
       if (num) {
         var from = parseFloat(num.dataset.from || '0');
         var to = parseFloat(num.dataset.to || '0');
@@ -480,9 +466,8 @@
         }, start + 0.5);
       }
 
-      /* 3 — PAUSE (units ~4.5 → 8.5): nothing moves, so the finished number is
-         held still on screen. 4 — only then does the reel slide one full slide
-         sideways to the next stat. */
+      /* 3 — PAUSE (~4.5 → 8.5): the finished number is held still.
+         4 — then the reel slides one full slide to the next stat. */
       if (i < n - 1) {
         tl.to(track, {
           xPercent: -100 * (i + 1),
@@ -492,8 +477,7 @@
       }
     });
 
-    /* zoom out begins right after the last stat's pause (same offset the
-       between-stat moves use) so the rhythm stays consistent */
+    /* zoom out: the reel shrinks away and the full grid lands */
     var zoomAt = (n - 1) * SL + 8.5;
     tl.to(track, {
       scale: 0.55,
@@ -519,108 +503,96 @@
 
   /* ---------------- benefit mini-infographics ---------------- */
 
-  function initVizWater() {
-    var root = $('#vizWater');
+  /* 01 — live circuit loads fill in (and re-fill on every return) */
+  function initVizSee() {
+    var root = $('#vizSee');
     if (!root || !hasAnime || reduceMotion) return;
-    var fills = $$('.tube-fill', root);
-    fills.forEach(function (f) { f.style.height = '0%'; });
-    onEnter(root, function () {
-      fills.forEach(function (f, i) {
-        anime({
-          targets: f,
-          height: (parseFloat(f.dataset.fill) || 0) + '%',
-          duration: 1700,
-          delay: 150 + i * 400,
-          easing: 'easeInOutQuart'
-        });
-      });
-    });
-  }
-
-  function initVizSpeed() {
-    var root = $('#vizSpeed');
-    if (!root || !hasAnime || reduceMotion) return;
-    var hydro = $('.race-fill.hydro', root);
-    var soil = $('.race-fill.soil', root);
-    var chip = $('#raceChip');
-    [hydro, soil].forEach(function (b) { if (b) b.style.width = '0%'; });
-    if (chip) chip.style.opacity = '0';
-
-    onEnter(root, function () {
-      /* a literal race: both bars head for harvest, hydro arrives 3× sooner */
-      if (soil) anime({ targets: soil, width: '100%', duration: 3600, easing: 'linear' });
-      if (hydro) {
-        anime({
-          targets: hydro,
-          width: '100%',
-          duration: 1200,
-          easing: 'linear',
-          complete: function () {
-            if (!chip) return;
-            anime({
-              targets: chip,
-              opacity: [0, 1],
-              scale: [0.4, 1],
-              rotate: 4,
-              duration: 650,
-              easing: 'easeOutBack'
-            });
-          }
-        });
-      }
-    });
-  }
-
-  function initVizClean() {
-    var root = $('#vizClean');
-    if (!root || !hasAnime || reduceMotion) return;
-    var segs = $$('.shield path', root);
-    segs.forEach(function (s) { s.style.strokeDashoffset = anime.setDashoffset(s); });
-    var chips = $$('.chip', root);
-    chips.forEach(function (c) { c.style.opacity = '0'; });
-
-    onEnter(root, function () {
+    var fills = $$('.circuit-fill', root);
+    function play() {
+      fills.forEach(function (f) { anime.remove(f); f.style.width = '0%'; });
       anime({
-        targets: segs,
+        targets: fills,
+        width: function (el) { return (parseFloat(el.dataset.load) || 0) + '%'; },
+        duration: 1300,
+        delay: anime.stagger(110),
+        easing: 'easeOutElastic(1, 0.7)'
+      });
+    }
+    onEveryEnter(root, play);
+  }
+
+  /* 02 — usage line draws on, then the anomaly + alert pop */
+  function initVizCatch() {
+    var root = $('#vizCatch');
+    if (!root || !hasAnime || reduceMotion) return;
+    var line = $('.chart-line', root);
+    var dot = $('.chart-alert', root);
+    var chip = $('#alertChip');
+    function play() {
+      if (line) { anime.remove(line); line.style.strokeDashoffset = anime.setDashoffset(line); }
+      if (dot) { anime.remove(dot); dot.style.transform = 'scale(0)'; dot.style.transformOrigin = 'center'; }
+      if (chip) { anime.remove(chip); chip.style.opacity = '0'; }
+      anime({
+        targets: line,
         strokeDashoffset: [anime.setDashoffset, 0],
-        duration: 1600,
-        delay: anime.stagger(280),
-        easing: 'easeInOutQuart'
+        duration: 1700,
+        easing: 'easeInOutSine',
+        complete: function () {
+          if (dot) anime({ targets: dot, scale: [0, 1], duration: 500, easing: 'easeOutBack' });
+          if (chip) anime({ targets: chip, opacity: [0, 1], translateY: [-8, 0], duration: 500, easing: 'easeOutCubic' });
+        }
       });
-      anime({
-        targets: chips,
-        opacity: [0, 1],
-        translateY: [14, 0],
-        delay: anime.stagger(140, { start: 1000 }),
-        duration: 700,
-        easing: 'easeOutCubic'
-      });
-    });
+    }
+    onEveryEnter(root, play);
   }
 
-  function initVizYear() {
-    var root = $('#vizYear');
+  /* 03 — the bill bars race down; "before" stays full, "with" lands lower */
+  function initVizCut() {
+    var root = $('#vizCut');
+    if (!root || !hasAnime || reduceMotion) return;
+    var before = $('.bill-fill.before', root);
+    var after = $('.bill-fill.after', root);
+    var chip = $('#saveChip');
+    function play() {
+      [before, after].forEach(function (b) { if (b) { anime.remove(b); b.style.width = '0%'; } });
+      if (chip) { anime.remove(chip); chip.style.opacity = '0'; }
+      if (before) anime({ targets: before, width: (parseFloat(before.dataset.w) || 100) + '%', duration: 1100, easing: 'easeOutQuart' });
+      if (after) anime({
+        targets: after,
+        width: (parseFloat(after.dataset.w) || 70) + '%',
+        duration: 1500,
+        delay: 350,
+        easing: 'easeOutQuart',
+        complete: function () {
+          if (chip) anime({ targets: chip, opacity: [0, 1], scale: [0.4, 1], rotate: 4, duration: 650, easing: 'easeOutBack' });
+        }
+      });
+    }
+    onEveryEnter(root, play);
+  }
+
+  /* 04 — the 24-hour ring sweeps and the number counts up */
+  function initVizClock() {
+    var root = $('#vizClock');
     if (!root || !hasAnime || reduceMotion) return;
     var sweep = $('.ring-sweep', root);
     var num = $('#ringNum');
-    if (sweep) sweep.style.strokeDashoffset = '100';
-    if (num) num.textContent = num.dataset.from || '0';
-
-    onEnter(root, function () {
-      if (sweep) {
-        anime({ targets: sweep, strokeDashoffset: [100, 0], duration: 2300, easing: 'easeInOutQuart' });
-      }
+    function play() {
+      if (sweep) { anime.remove(sweep); sweep.style.strokeDashoffset = '100'; }
+      if (num) num.textContent = num.dataset.from || '0';
+      if (sweep) anime({ targets: sweep, strokeDashoffset: [100, 0], duration: 2200, easing: 'easeInOutQuart' });
       if (num) {
         var state = { v: parseFloat(num.dataset.from || '0') };
         anime({
           targets: state,
-          v: parseFloat(num.dataset.to || '365'),
-          duration: 2300,
+          v: parseFloat(num.dataset.to || '24'),
+          duration: 2200,
           easing: 'easeInOutQuart',
           update: function () { num.textContent = String(Math.round(state.v)); }
         });
       }
-    });
+    }
+    onEveryEnter(root, play);
   }
 
   /* ---------------- CTA button ---------------- */
@@ -640,7 +612,6 @@
       });
     }
 
-    /* magnetic hover */
     var strength = 26;
     btn.addEventListener('mousemove', function (e) {
       var r = btn.getBoundingClientRect();
@@ -655,7 +626,7 @@
     });
   }
 
-  /* ---------------- three.js hero scene ---------------- */
+  /* ---------------- three.js hero scene (energy core) ---------------- */
 
   var GLSL_NOISE = [
     'vec3 mod289(vec3 x){return x - floor(x * (1.0/289.0)) * 289.0;}',
@@ -714,9 +685,9 @@
     'varying vec3 vNormal;',
     'varying vec3 vView;',
     'void main(){',
-    '  float t = uTime * 0.18;',
-    '  float n1 = snoise(position * uFreq * 0.55 + vec3(t, t * 0.8, -t));',
-    '  float n2 = snoise(position * uFreq * 1.6 + vec3(-t * 1.3, t, t * 0.6)) * 0.35;',
+    '  float t = uTime * 0.22;',
+    '  float n1 = snoise(position * uFreq * 0.6 + vec3(t, t * 0.8, -t));',
+    '  float n2 = snoise(position * uFreq * 1.7 + vec3(-t * 1.3, t, t * 0.6)) * 0.35;',
     '  float d = n1 + n2;',
     '  vDisp = d;',
     '  vec3 displaced = position + normal * d * uAmp;',
@@ -738,26 +709,26 @@
     'void main(){',
     '  vec3 N = normalize(vNormal);',
     '  vec3 V = normalize(vView);',
-    '  float fres = pow(1.0 - max(dot(N, V), 0.0), 2.2);',
+    '  float fres = pow(1.0 - max(dot(N, V), 0.0), 2.1);',
     '  float band = smoothstep(-0.9, 1.1, vDisp);',
-    '  vec3 base = mix(uDeep, uLeaf * 0.8, band * 0.8);',
+    '  vec3 base = mix(uDeep, uLeaf * 0.85, band * 0.85);',
     '  vec3 rim = mix(uLeaf, uWater, clamp(vDisp * 0.5 + 0.5, 0.0, 1.0));',
-    '  vec3 col = base + rim * fres * 0.95;',
-    '  col += uMint * pow(band, 3.0) * 0.16;',
+    '  vec3 col = base + rim * fres * 1.05;',
+    '  col += uMint * pow(band, 3.0) * 0.18;',
     '  gl_FragColor = vec4(col, 1.0);',
     '}'
   ].join('\n');
 
   var THEME_3D = {
     dark: {
-      deep: '#0b3d1e', leaf: '#aed581', mint: '#d0f0c0', water: '#81d4fa',
-      ring1: '#aed581', ring1o: 0.38, ring2: '#81d4fa', ring2o: 0.2,
-      pColor: '#ffffff', pOpacity: 0.85, additive: true
+      deep: '#0a2540', leaf: '#2dd4bf', mint: '#22d3ee', water: '#38bdf8',
+      ring1: '#2dd4bf', ring1o: 0.4, ring2: '#fbbf24', ring2o: 0.32,
+      pColor: '#fbbf24', pOpacity: 0.9, additive: true
     },
     light: {
-      deep: '#1b5e20', leaf: '#43a047', mint: '#66bb6a', water: '#2e7d32',
-      ring1: '#2e7d32', ring1o: 0.4, ring2: '#66bb6a', ring2o: 0.25,
-      pColor: '#1b5e20', pOpacity: 0.4, additive: false
+      deep: '#0284c7', leaf: '#0d9488', mint: '#0891b2', water: '#0ea5e9',
+      ring1: '#0d9488', ring1o: 0.42, ring2: '#d97706', ring2o: 0.3,
+      pColor: '#0d9488', pOpacity: 0.42, additive: false
     }
   };
 
@@ -769,7 +740,7 @@
     try {
       renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     } catch (err) {
-      return null; // no WebGL — the CSS glows carry the hero on their own
+      return null;
     }
     renderer.setClearColor(0x000000, 0);
 
@@ -777,14 +748,13 @@
     var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 60);
     camera.position.z = 6.4;
 
-    /* the living droplet */
     var blobMat = new THREE.ShaderMaterial({
       vertexShader: BLOB_VERT,
       fragmentShader: BLOB_FRAG,
       uniforms: {
         uTime: { value: 0 },
-        uAmp: { value: 0.42 },
-        uFreq: { value: 1.15 },
+        uAmp: { value: 0.46 },
+        uFreq: { value: 1.2 },
         uDeep: { value: new THREE.Color(THEME_3D.dark.deep) },
         uLeaf: { value: new THREE.Color(THEME_3D.dark.leaf) },
         uMint: { value: new THREE.Color(THEME_3D.dark.mint) },
@@ -796,7 +766,6 @@
     var blobGroup = new THREE.Group();
     blobGroup.add(blob);
 
-    /* orbit rings */
     var ring1 = new THREE.Mesh(
       new THREE.TorusGeometry(2.3, 0.012, 12, 220),
       new THREE.MeshBasicMaterial({ color: new THREE.Color(THEME_3D.dark.ring1), transparent: true, opacity: THEME_3D.dark.ring1o })
@@ -810,7 +779,7 @@
     blobGroup.add(ring1, ring2);
     scene.add(blobGroup);
 
-    /* drifting spore particles */
+    /* drifting energy-spark particles */
     var COUNT = 380;
     var positions = new Float32Array(COUNT * 3);
     var shades = new Float32Array(COUNT * 3);
@@ -822,9 +791,7 @@
       positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
       positions[i * 3 + 2] = r * Math.cos(phi) - 1.5;
       var dim = 0.35 + Math.random() * 0.65;
-      shades[i * 3] = dim;
-      shades[i * 3 + 1] = dim;
-      shades[i * 3 + 2] = dim;
+      shades[i * 3] = dim; shades[i * 3 + 1] = dim; shades[i * 3 + 2] = dim;
     }
     var pGeo = new THREE.BufferGeometry();
     pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -841,7 +808,6 @@
     var points = new THREE.Points(pGeo, pMat);
     scene.add(points);
 
-    /* pointer parallax */
     var tx = 0, ty = 0, cx = 0, cy = 0;
     window.addEventListener('pointermove', function (e) {
       tx = e.clientX / window.innerWidth - 0.5;
@@ -858,14 +824,13 @@
       camera.updateProjectionMatrix();
       var wide = w > 880;
       blobGroup.position.x = wide ? 1.55 : 0;
-      baseY = wide ? 0.05 : 1.55; /* on phones, park the droplet above the headline */
+      baseY = wide ? 0.05 : 1.55;
       var s = wide ? 1 : 0.55;
       blobGroup.scale.set(s, s, s);
     }
     resize();
     window.addEventListener('resize', resize);
 
-    /* only render while the hero is on screen */
     var visible = true;
     new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) { visible = entry.isIntersecting; });
@@ -903,11 +868,11 @@
       blobMat.uniforms.uTime.value = t;
       cx += (tx - cx) * 0.04;
       cy += (ty - cy) * 0.04;
-      blobGroup.rotation.y = t * 0.12 + cx * 0.55;
+      blobGroup.rotation.y = t * 0.14 + cx * 0.55;
       blobGroup.rotation.x = Math.sin(t * 0.18) * 0.08 + cy * 0.4;
       blobGroup.position.y = baseY + Math.sin(t * 0.7) * 0.07;
-      ring1.rotation.z = t * 0.16;
-      ring2.rotation.z = -t * 0.11;
+      ring1.rotation.z = t * 0.18;
+      ring2.rotation.z = -t * 0.13;
       points.rotation.y = t * 0.02;
       points.rotation.x = Math.sin(t * 0.1) * 0.04;
       renderer.render(scene, camera);
@@ -928,10 +893,10 @@
   initReveals();
   initDrift();
   initStatsShowcase();
-  initVizWater();
-  initVizSpeed();
-  initVizClean();
-  initVizYear();
+  initVizSee();
+  initVizCatch();
+  initVizCut();
+  initVizClock();
   initCTA();
   initLoader(setupEntrance());
 })();
