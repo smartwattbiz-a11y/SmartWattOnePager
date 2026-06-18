@@ -36,9 +36,16 @@ python3 -m http.server 8000
 - Light mode is the default; dark mode is one tap away and remembered.
 - Everything degrades gracefully without JS/CDNs and respects `prefers-reduced-motion`.
 - Fluid type is sized so the longest words never overflow, from ~320px phones up.
+- SEO: a keyword-led `<title>`/description, canonical URL, Open Graph + Twitter
+  Card tags, and JSON-LD (`Organization` + `WebSite` + `WebPage`) so a search for
+  **SmartWatt** maps to this page. `robots.txt` + `sitemap.xml` let crawlers
+  discover it, and `og.png` is the 1200×630 social/share card.
 
 ```
-index.html        markup (cutscene, hero, stats, 4 benefit sections, CTA)
+index.html        markup (cutscene, hero, stats, 4 benefit sections, CTA) + SEO head
 css/styles.css    all styling, theming, responsive + reduced-motion rules
 js/main.js        three.js core, anime.js counters/viz, GSAP scroll work
+og.png            1200×630 Open Graph / social share card
+robots.txt        crawl rules + sitemap pointer
+sitemap.xml       single-URL sitemap for search engines
 ```
