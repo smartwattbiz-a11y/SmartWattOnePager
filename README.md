@@ -37,15 +37,21 @@ python3 -m http.server 8000
 - Everything degrades gracefully without JS/CDNs and respects `prefers-reduced-motion`.
 - Fluid type is sized so the longest words never overflow, from ~320px phones up.
 - SEO: a keyword-led `<title>`/description, canonical URL, Open Graph + Twitter
-  Card tags, and JSON-LD (`Organization` + `WebSite` + `WebPage`) so a search for
-  **SmartWatt** maps to this page. `robots.txt` + `sitemap.xml` let crawlers
-  discover it, and `og.png` is the 1200×630 social/share card.
+  Card tags, and JSON-LD (`Organization` + `WebSite` + `WebPage` + `FAQPage`) so a
+  search for **SmartWatt** maps to this page. `robots.txt` + `sitemap.xml` let
+  crawlers discover it, `og.png` is the 1200×630 social/share card, and a full
+  icon set + `site.webmanifest` cover favicons, Apple touch icon, and installability.
+  CDN/font origins are `preconnect`-ed and all libraries load `defer` for speed.
 
 ```
-index.html        markup (cutscene, hero, stats, 4 benefit sections, CTA) + SEO head
-css/styles.css    all styling, theming, responsive + reduced-motion rules
-js/main.js        three.js core, anime.js counters/viz, GSAP scroll work
-og.png            1200×630 Open Graph / social share card
-robots.txt        crawl rules + sitemap pointer
-sitemap.xml       single-URL sitemap for search engines
+index.html             markup (cutscene, hero, stats, 4 benefit sections, CTA) + SEO head
+css/styles.css         all styling, theming, responsive + reduced-motion rules
+js/main.js             three.js core, anime.js counters/viz, GSAP scroll work
+og.png                 1200×630 Open Graph / social share card
+icon-512/192.png       PWA / schema logo icons (amber tile + bolt)
+apple-touch-icon.png   180×180 iOS home-screen icon
+favicon-32.png         browser-tab favicon
+site.webmanifest       PWA manifest (name, theme, icons)
+robots.txt             crawl rules + sitemap pointer
+sitemap.xml            single-URL sitemap for search engines
 ```

@@ -26,10 +26,14 @@
   <meta name="twitter:title" content="SmartWatt — See every watt in your home" />
   <meta name="twitter:description" content="Real-time, per-circuit home energy monitoring: cut bills by 30%, catch waste 3× faster, zero blind spots, 24/7 live insight." />
   <meta name="twitter:image" content="https://why-smartwatt.vercel.app/og.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/styles.css" />
@@ -52,7 +56,7 @@
         "@id": "https://why-smartwatt.vercel.app/#organization",
         "name": "SmartWatt",
         "url": "https://why-smartwatt.vercel.app/",
-        "logo": "https://why-smartwatt.vercel.app/og.png",
+        "logo": "https://why-smartwatt.vercel.app/icon-512.png",
         "image": "https://why-smartwatt.vercel.app/og.png",
         "description": "SmartWatt is real-time, per-circuit home energy monitoring — see every watt in your home, cut bills, and catch waste as it happens.",
         "sameAs": ["https://smartwatt-dashboard.vercel.app/circuit-map"]
@@ -75,6 +79,45 @@
         "primaryImageOfPage": "https://why-smartwatt.vercel.app/og.png",
         "description": "Why SmartWatt wins: 30% lower bills, 3× faster to catch waste, zero blind spots, 24/7 live monitoring — real-time, per-circuit home energy intelligence.",
         "inLanguage": "en"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://why-smartwatt.vercel.app/#faq",
+        "isPartOf": { "@id": "https://why-smartwatt.vercel.app/#webpage" },
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is SmartWatt?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SmartWatt is real-time, per-circuit home energy monitoring. A sensor on your panel reads every circuit so you can see exactly where your power goes and catch waste as it happens."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much can SmartWatt lower my electricity bill?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Homes that watch their power in real time typically cut their bills by about 30% by spotting waste and high-draw appliances early."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does SmartWatt help me catch energy waste?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SmartWatt flags spikes and unusual draw across every circuit, making it roughly 3× faster to catch waste than reading a monthly bill — with zero blind spots and 24/7 live monitoring."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I get started with SmartWatt?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Plug the sensor onto your breaker panel, connect your meter, and watch every watt in your home from the SmartWatt dashboard."
+            }
+          }
+        ]
       }
     ]
   }

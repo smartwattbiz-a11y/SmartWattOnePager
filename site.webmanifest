@@ -1,0 +1,13 @@
+{
+  "name": "SmartWatt — See every watt in your home",
+  "short_name": "SmartWatt",
+  "description": "Real-time, per-circuit home energy monitoring: cut bills, catch waste, zero blind spots.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#0b1220",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
