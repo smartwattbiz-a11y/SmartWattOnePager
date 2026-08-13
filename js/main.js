@@ -80,6 +80,45 @@
     }
   }
 
+  /* ---------------- fullscreen toggle ---------------- */
+
+  function initFullscreen() {
+    var btn = $('#fsBtn');
+    if (!btn) return;
+    var root = document.documentElement;
+    var request = root.requestFullscreen || root.webkitRequestFullscreen;
+    var exit = document.exitFullscreen || document.webkitExitFullscreen;
+
+    /* no Fullscreen API (e.g. iPhone Safari) — drop the button rather than
+       leave a dead control */
+    if (!request || document.fullscreenEnabled === false) {
+      btn.remove();
+      return;
+    }
+
+    function active() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement);
+    }
+    function sync() {
+      var on = active();
+      btn.classList.toggle('is-fs', on);
+      btn.setAttribute('aria-pressed', String(on));
+      btn.setAttribute('aria-label', on ? 'Exit full screen' : 'Enter full screen');
+    }
+
+    btn.addEventListener('click', function () {
+      if (active()) {
+        if (exit) exit.call(document);
+      } else {
+        var p = request.call(root);
+        if (p && p.catch) p.catch(function () {});
+      }
+    });
+    document.addEventListener('fullscreenchange', sync);
+    document.addEventListener('webkitfullscreenchange', sync);
+    sync();
+  }
+
   /* ---------------- loader + cutscene entrance ---------------- */
 
   function setupEntrance() {
@@ -885,6 +924,7 @@
 
   var threeAPI = initThree();
   initTheme(threeAPI);
+  initFullscreen();
   initChrome();
   initMarquees();
   initCutscene();
